@@ -14,38 +14,116 @@ import RegisterButton from "./RegisterButton";
 
 const RIBBON = "SOUTHEAST REGIONAL CONFERENCE";
 
-/** Scalloped cloud edge through fixed points (deterministic, so it prerenders). */
-function scallop(points: [number, number][], bottom: number) {
-  let d = `M${points[0][0]} ${bottom} L${points[0][0]} ${points[0][1]}`;
-  for (let i = 1; i < points.length; i++) {
-    const [x0, y0] = points[i - 1];
-    const [x1, y1] = points[i];
-    const r = Math.hypot(x1 - x0, y1 - y0) / 1.6;
-    d += ` A${r.toFixed(1)} ${r.toFixed(1)} 0 0 1 ${x1} ${y1}`;
-  }
-  return `${d} L${points[points.length - 1][0]} ${bottom} Z`;
+/* ── Fluffy clouds ────────────────────────────────────────────
+   Each cloud is a union of overlapping puffs. Drawing every puff
+   in ink at r+outline first, then filling them all in the cloud
+   colour at r, leaves one clean outline around the whole shape. */
+
+type Puff = [cx: number, cy: number, r: number];
+type CloudShape = { fill: string; puffs: Puff[]; fillers: [x: number, y: number, w: number, h: number][] };
+
+/** Small deterministic PRNG so the clouds prerender identically every time. */
+function seeded(seed: number) {
+  let t = seed;
+  return () => {
+    t = (t + 0x6d2b79f5) | 0;
+    let x = Math.imul(t ^ (t >>> 15), 1 | t);
+    x = (x + Math.imul(x ^ (x >>> 7), 61 | x)) ^ x;
+    return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+  };
 }
 
-const cloudLayers = [
+/** A row of big puffs along a baseline with smaller puffs stacked on top. */
+function cloudBank(seed: number, baseY: number, minR: number, maxR: number): Puff[] {
+  const rand = seeded(seed);
+  const between = (lo: number, hi: number) => lo + (hi - lo) * rand();
+  const puffs: Puff[] = [];
+  let x = -320;
+  while (x < 1920) {
+    const r = between(minR, maxR);
+    const cy = baseY + between(-14, 14);
+    puffs.push([x, cy, r]);
+    if (rand() > 0.3) {
+      const sr = r * between(0.42, 0.62);
+      puffs.push([x + r * between(-0.45, 0.45), cy - r * between(0.55, 0.8), sr]);
+      if (rand() > 0.6) puffs.push([x + r * between(-0.2, 0.3), cy - r * between(0.95, 1.15), sr * between(0.5, 0.7)]);
+    }
+    if (rand() > 0.55) puffs.push([x + r * 0.7, cy + r * 0.25, r * between(0.5, 0.7)]);
+    x += r * between(1.05, 1.4);
+  }
+  return puffs;
+}
+
+const BANK_BOTTOM = 420;
+const cloudLayers: (CloudShape & { drift: number; duration: number })[] = [
+  { fill: "var(--color-rust)", puffs: cloudBank(7, 140, 58, 92), fillers: [[-400, 140, 2400, BANK_BOTTOM]], drift: 18, duration: 16 },
+  { fill: "var(--color-blush)", puffs: cloudBank(23, 196, 46, 74), fillers: [[-400, 196, 2400, BANK_BOTTOM]], drift: -24, duration: 13 },
+  { fill: "var(--color-peach)", puffs: cloudBank(41, 248, 40, 62), fillers: [[-400, 248, 2400, BANK_BOTTOM]], drift: 14, duration: 11 },
+];
+
+const cornerLeft: CloudShape[] = [
   {
     fill: "var(--color-rust)",
-    d: scallop([[-120, 120], [60, 92], [250, 118], [430, 84], [610, 110], [800, 78], [990, 104], [1170, 70], [1350, 98], [1530, 74], [1720, 104]], 340),
-    drift: 18,
-    duration: 16,
+    puffs: [[30, 20, 85], [130, 0, 75], [220, 14, 62], [296, -4, 52], [360, 6, 36], [-10, 112, 70], [52, 92, 40], [178, 66, 34], [36, 156, 46]],
+    fillers: [[-40, -60, 340, 70], [-60, -40, 70, 200]],
   },
   {
     fill: "var(--color-blush)",
-    d: scallop([[-140, 168], [40, 140], [220, 166], [380, 136], [560, 162], [730, 132], [900, 160], [1080, 128], [1260, 156], [1430, 126], [1600, 152], [1740, 140]], 340),
-    drift: -24,
-    duration: 13,
-  },
-  {
-    fill: "var(--color-peach)",
-    d: scallop([[-160, 212], [10, 190], [170, 214], [340, 186], [520, 210], [700, 182], [870, 208], [1040, 184], [1220, 206], [1390, 180], [1560, 204], [1760, 192]], 340),
-    drift: 14,
-    duration: 11,
+    puffs: [[8, 182, 58], [72, 160, 42], [108, 198, 36], [52, 222, 46], [-20, 236, 52], [40, 128, 26]],
+    fillers: [[-60, 180, 110, 100]],
   },
 ];
+
+const cornerRight: CloudShape[] = [
+  {
+    fill: "var(--color-peach)",
+    puffs: [[342, 12, 95], [246, 2, 70], [172, 12, 50], [112, -6, 38], [302, 108, 60], [356, 152, 48], [228, 72, 42], [270, 150, 30]],
+    fillers: [[160, -60, 260, 70], [300, -40, 100, 200]],
+  },
+];
+
+function highlightArc([cx, cy, r]: Puff) {
+  const pt = (deg: number) => {
+    const a = (deg * Math.PI) / 180;
+    return `${(cx + r * 0.66 * Math.cos(a)).toFixed(1)} ${(cy + r * 0.66 * Math.sin(a)).toFixed(1)}`;
+  };
+  return `M${pt(200)} A${(r * 0.66).toFixed(1)} ${(r * 0.66).toFixed(1)} 0 0 1 ${pt(250)}`;
+}
+
+/** Renders cloud shapes: ink pass, colour pass, then soft highlights. */
+function Puffs({ shapes, outline, highlightMin }: { shapes: CloudShape[]; outline: number; highlightMin: number }) {
+  return (
+    <>
+      {shapes.map((shape, s) => (
+        <g key={s}>
+          {shape.puffs.map(([cx, cy, r], i) => (
+            <circle key={`o${i}`} cx={cx} cy={cy} r={r + outline} fill="var(--color-ink)" />
+          ))}
+          {shape.fillers.map(([x, y, w, h], i) => (
+            <rect key={`f${i}`} x={x} y={y} width={w} height={h} fill={shape.fill} />
+          ))}
+          {shape.puffs.map(([cx, cy, r], i) => (
+            <circle key={`c${i}`} cx={cx} cy={cy} r={r} fill={shape.fill} />
+          ))}
+          {shape.puffs
+            .filter((p) => p[2] >= highlightMin)
+            .map((p, i) => (
+              <path
+                key={`h${i}`}
+                d={highlightArc(p)}
+                fill="none"
+                stroke="var(--color-paper)"
+                strokeOpacity="0.45"
+                strokeWidth="4"
+                strokeLinecap="round"
+                vectorEffect="non-scaling-stroke"
+              />
+            ))}
+        </g>
+      ))}
+    </>
+  );
+}
 
 function Sparkle({ className, delay = 0 }: { className: string; delay?: number }) {
   return (
@@ -151,18 +229,17 @@ export default function Hero() {
         animate={{ x: 0, y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        <path d="M0 0h420c-10 40-50 62-96 56-14 40-62 60-108 44-26 44-92 58-136 26C56 160 16 170 0 150Z" fill="var(--color-rust)" stroke="var(--color-ink)" strokeWidth="3" />
-        <path d="M0 96c26-10 58 2 66 26 30-10 62 8 62 38 34 4 52 36 36 64-18 30-60 30-82 14-20 24-58 26-82 6Z" fill="var(--color-blush)" stroke="var(--color-ink)" strokeWidth="3" />
+        <Puffs shapes={cornerLeft} outline={3} highlightMin={50} />
       </motion.svg>
       <motion.svg
         viewBox="0 0 360 200"
-        className="absolute -top-14 -right-20 w-[18rem] sm:w-[26rem]"
+        className="absolute -top-4 -right-6 w-[15rem] sm:top-0 sm:-right-4 sm:w-[24rem]"
         aria-hidden="true"
         initial={reduce ? false : { x: 80, y: -60, opacity: 0 }}
         animate={{ x: 0, y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
       >
-        <path d="M30 0h330v150c-30 20-70 14-86-10-26 26-76 22-92-10-34 14-74-6-76-42-40 0-66-40-46-74Z" fill="var(--color-peach)" stroke="var(--color-ink)" strokeWidth="3" />
+        <Puffs shapes={cornerRight} outline={3} highlightMin={50} />
       </motion.svg>
 
       {/* sparkles + confetti */}
@@ -272,15 +349,12 @@ export default function Hero() {
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 70, damping: 14, delay: 0.15 * i }}
           >
-            <motion.path
-              d={layer.d}
-              fill={layer.fill}
-              stroke="var(--color-ink)"
-              strokeWidth="3"
-              vectorEffect="non-scaling-stroke"
+            <motion.g
               animate={reduce ? undefined : { x: [0, layer.drift, 0] }}
               transition={{ duration: layer.duration, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-            />
+            >
+              <Puffs shapes={[layer]} outline={4} highlightMin={55} />
+            </motion.g>
           </motion.svg>
         ))}
       </div>
