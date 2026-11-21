@@ -1,11 +1,10 @@
 import Image from "next/image";
 import { about } from "@/content/site";
-import { Star, Wave } from "./decor";
+import { Star } from "./decor";
 
 export default function About() {
   return (
-    <section id="about" className="relative bg-peach py-20 sm:py-24">
-      <Wave color="var(--color-peach)" />
+    <section id="about" className="relative bg-peach pt-10 pb-20 sm:pt-14 sm:pb-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr]">
           <div>

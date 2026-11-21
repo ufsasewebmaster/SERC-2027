@@ -15,6 +15,10 @@
   --color-blush: #ebb7b6;
   --color-star: #f2c14e;
   --color-pink: #ee9cb5;
+  --color-meadow: #d0d197;
+  --color-kraft: #f3dfbf;
+  --color-alert-orange: #dc9a5a;
+  --color-alert-blue: #7f9fd4;
   --color-skyblue: #8fd3f0;
 
   --font-sans: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
@@ -24,6 +28,8 @@
   --animate-float: float 6s ease-in-out infinite;
   --animate-wiggle: wiggle 0.5s ease-in-out;
   --animate-twinkle: twinkle 3s ease-in-out infinite;
+  --animate-drift: drift 7s ease-in-out infinite;
+  --animate-bob: bob 3.2s ease-in-out infinite;
 
   @keyframes float {
     0%, 100% { transform: translateY(0) rotate(-1deg); }
@@ -35,6 +41,14 @@
     40% { transform: rotate(6deg); }
     60% { transform: rotate(-4deg); }
     80% { transform: rotate(3deg); }
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) rotate(var(--r, 0deg)); }
+    50% { transform: translate(6px, -12px) rotate(calc(var(--r, 0deg) + 18deg)); }
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
   }
   @keyframes twinkle {
     0%, 100% { transform: scale(1) rotate(0); opacity: 1; }
