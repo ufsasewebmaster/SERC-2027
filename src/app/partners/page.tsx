@@ -3,11 +3,14 @@ import Image from "next/image";
 import { BoxIcon } from "@/components/decor";
 import PageHeader from "@/components/PageHeader";
 import { event, partners } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Partners",
-  description: "Meet the industry partners making SERC 2027 possible.",
-};
+  description:
+    "Meet the industry partners behind SASE SERC 2027, and learn how your company can recruit STEM students from across the Southeast at the University of Florida.",
+  path: "/partners",
+});
 
 export default function PartnersPage() {
   return (

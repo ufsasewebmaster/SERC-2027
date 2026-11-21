@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import PageHeader from "@/components/PageHeader";
 import { symposium } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Research Symposium",
-  description: "Apply to present your research at the SERC 2027 Research Symposium.",
-};
+  description:
+    "Present your research poster at the SASE SERC 2027 Research Symposium at the University of Florida on January 17, 2027. Get judged, get feedback and win awards.",
+  path: "/symposium",
+});
 
 const highlights = [
   {
