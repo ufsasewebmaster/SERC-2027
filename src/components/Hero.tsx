@@ -14,13 +14,17 @@ import RegisterButton from "./RegisterButton";
 
 const RIBBON = "SOUTHEAST REGIONAL CONFERENCE";
 
-/* ── Fluffy clouds ────────────────────────────────────────────
-   Each cloud is a union of overlapping puffs. Drawing every puff
-   in ink at r+outline first, then filling them all in the cloud
-   colour at r, leaves one clean outline around the whole shape. */
+/* ── Clouds ───────────────────────────────────────────────────
+   Matches the banner art: wide, shallow billows that overlap one
+   another, each with its own thin rust outline and a lighter band
+   just inside its top edge. Every billow sits fully inside its
+   SVG's viewBox, so nothing gets clipped flat. */
 
-type Puff = [cx: number, cy: number, r: number];
-type CloudShape = { fill: string; puffs: Puff[]; fillers: [x: number, y: number, w: number, h: number][] };
+/** One billow: an ellipse much wider than it is tall. */
+type Billow = [cx: number, cy: number, rx: number, ry: number];
+type CloudLayer = { fill: string; rim: string; billows: Billow[]; base?: number };
+
+const CLOUD_LINE = "var(--color-rust)";
 
 /** Small deterministic PRNG so the clouds prerender identically every time. */
 function seeded(seed: number) {
@@ -33,97 +37,68 @@ function seeded(seed: number) {
   };
 }
 
-/** A row of big puffs along a baseline with smaller puffs stacked on top. */
-function cloudBank(seed: number, baseY: number, minR: number, maxR: number): Puff[] {
+/** A row of overlapping billows along a baseline (viewBox units, 1600 wide). */
+function billowRow(seed: number, baseY: number, minRx: number, maxRx: number): Billow[] {
   const rand = seeded(seed);
   const between = (lo: number, hi: number) => lo + (hi - lo) * rand();
-  const puffs: Puff[] = [];
-  let x = -320;
-  while (x < 1920) {
-    const r = between(minR, maxR);
-    const cy = baseY + between(-14, 14);
-    puffs.push([x, cy, r]);
-    if (rand() > 0.3) {
-      const sr = r * between(0.42, 0.62);
-      puffs.push([x + r * between(-0.45, 0.45), cy - r * between(0.55, 0.8), sr]);
-      if (rand() > 0.6) puffs.push([x + r * between(-0.2, 0.3), cy - r * between(0.95, 1.15), sr * between(0.5, 0.7)]);
-    }
-    if (rand() > 0.55) puffs.push([x + r * 0.7, cy + r * 0.25, r * between(0.5, 0.7)]);
-    x += r * between(1.05, 1.4);
+  const row: Billow[] = [];
+  let x = between(-120, 0);
+  while (x < 1720) {
+    // alternate big and small billows so the edge doesn't read as a row of equal bumps
+    const big = rand() > 0.4;
+    const rx = big ? between((minRx + maxRx) / 2, maxRx) : between(minRx * 0.7, (minRx + maxRx) / 2);
+    row.push([x, baseY + between(-30, 30) - (big ? 0 : 6), rx, rx * between(0.5, 0.62)]);
+    x += rx * between(1.1, 1.5);
   }
-  return puffs;
+  return row;
 }
 
-const BANK_BOTTOM = 420;
-const cloudLayers: (CloudShape & { drift: number; duration: number })[] = [
-  { fill: "var(--color-rust)", puffs: cloudBank(7, 140, 58, 92), fillers: [[-400, 140, 2400, BANK_BOTTOM]], drift: 18, duration: 16 },
-  { fill: "var(--color-blush)", puffs: cloudBank(23, 196, 46, 74), fillers: [[-400, 196, 2400, BANK_BOTTOM]], drift: -24, duration: 13 },
-  { fill: "var(--color-peach)", puffs: cloudBank(41, 248, 40, 62), fillers: [[-400, 248, 2400, BANK_BOTTOM]], drift: 14, duration: 11 },
-];
-
-const cornerLeft: CloudShape[] = [
-  {
-    fill: "var(--color-rust)",
-    puffs: [[30, 20, 85], [130, 0, 75], [220, 14, 62], [296, -4, 52], [360, 6, 36], [-10, 112, 70], [52, 92, 40], [178, 66, 34], [36, 156, 46]],
-    fillers: [[-40, -60, 340, 70], [-60, -40, 70, 200]],
-  },
-  {
-    fill: "var(--color-blush)",
-    puffs: [[8, 182, 58], [72, 160, 42], [108, 198, 36], [52, 222, 46], [-20, 236, 52], [40, 128, 26]],
-    fillers: [[-60, 180, 110, 100]],
-  },
-];
-
-const cornerRight: CloudShape[] = [
-  {
-    fill: "var(--color-peach)",
-    puffs: [[342, 12, 95], [246, 2, 70], [172, 12, 50], [112, -6, 38], [302, 108, 60], [356, 152, 48], [228, 72, 42], [270, 150, 30]],
-    fillers: [[160, -60, 260, 70], [300, -40, 100, 200]],
-  },
-];
-
-function highlightArc([cx, cy, r]: Puff) {
+/** Top arc of a billow, inset from its outline — the lighter band seen in the art. */
+function rimArc([cx, cy, rx, ry]: Billow, inset: number) {
+  const ax = rx - inset;
+  const ay = ry - inset;
   const pt = (deg: number) => {
     const a = (deg * Math.PI) / 180;
-    return `${(cx + r * 0.66 * Math.cos(a)).toFixed(1)} ${(cy + r * 0.66 * Math.sin(a)).toFixed(1)}`;
+    return `${(cx + ax * Math.cos(a)).toFixed(1)} ${(cy + ay * Math.sin(a)).toFixed(1)}`;
   };
-  return `M${pt(200)} A${(r * 0.66).toFixed(1)} ${(r * 0.66).toFixed(1)} 0 0 1 ${pt(250)}`;
+  return `M${pt(205)} A${ax.toFixed(1)} ${ay.toFixed(1)} 0 0 1 ${pt(335)}`;
 }
 
-/** Renders cloud shapes: ink pass, colour pass, then soft highlights. */
-function Puffs({ shapes, outline, highlightMin }: { shapes: CloudShape[]; outline: number; highlightMin: number }) {
+/** Draws billows in order (later ones overlap earlier ones), then fills the body below them. */
+function Billows({ layer, line = 3.5, inset = 9 }: { layer: CloudLayer; line?: number; inset?: number }) {
   return (
-    <>
-      {shapes.map((shape, s) => (
-        <g key={s}>
-          {shape.puffs.map(([cx, cy, r], i) => (
-            <circle key={`o${i}`} cx={cx} cy={cy} r={r + outline} fill="var(--color-ink)" />
-          ))}
-          {shape.fillers.map(([x, y, w, h], i) => (
-            <rect key={`f${i}`} x={x} y={y} width={w} height={h} fill={shape.fill} />
-          ))}
-          {shape.puffs.map(([cx, cy, r], i) => (
-            <circle key={`c${i}`} cx={cx} cy={cy} r={r} fill={shape.fill} />
-          ))}
-          {shape.puffs
-            .filter((p) => p[2] >= highlightMin)
-            .map((p, i) => (
-              <path
-                key={`h${i}`}
-                d={highlightArc(p)}
-                fill="none"
-                stroke="var(--color-paper)"
-                strokeOpacity="0.45"
-                strokeWidth="4"
-                strokeLinecap="round"
-                vectorEffect="non-scaling-stroke"
-              />
-            ))}
+    <g>
+      {layer.billows.map((b, i) => (
+        <g key={i}>
+          <ellipse cx={b[0]} cy={b[1]} rx={b[2]} ry={b[3]} fill={layer.fill} stroke={CLOUD_LINE} strokeWidth={line} />
+          <path d={rimArc(b, inset)} fill="none" stroke={layer.rim} strokeWidth={inset * 0.7} strokeLinecap="round" opacity="0.7" />
         </g>
       ))}
-    </>
+      {layer.base !== undefined && <rect x={-200} y={layer.base} width={2000} height={600} fill={layer.fill} />}
+    </g>
   );
 }
+
+const BANK_H = 360;
+const bankLayers: (CloudLayer & { drift: number; duration: number })[] = [
+  // back layers sit lower so they only peek between the front billows, as in the banner
+  { fill: "#b8705f", rim: "#cb8d7e", billows: billowRow(7, 236, 170, 250), drift: 18, duration: 16 },
+  { fill: "#f2bcb2", rim: "#f9d4cc", billows: billowRow(23, 262, 150, 230), drift: -24, duration: 13 },
+  { fill: "var(--color-peach)", rim: "#fff1e2", billows: billowRow(41, 306, 150, 240), drift: 14, duration: 11 },
+  // body fill starts at the highest billow centre so no billow's lower outline shows
+].map((l) => ({ ...l, base: Math.min(...l.billows.map((b) => b[1])) }));
+
+/** Top-right: a cream cloud tucked into the corner (viewBox 420×240; touches only the top and right edges). */
+const cornerRight: CloudLayer = {
+  fill: "var(--color-peach)",
+  rim: "#fff1e2",
+  billows: [
+    [150, -24, 110, 62],
+    [282, 0, 150, 84],
+    [410, 46, 120, 104],
+    [430, 168, 74, 60],
+  ],
+};
 
 function Sparkle({ className, delay = 0 }: { className: string; delay?: number }) {
   return (
@@ -192,9 +167,12 @@ function SpeechBubble({ reduce }: { reduce: boolean }) {
             fill="var(--color-kraft)"
           />
         </svg>
-        <h1 className="absolute inset-0 flex -rotate-[4deg] flex-col items-center justify-center pb-[12%] text-center font-sans leading-[0.92] font-bold text-[#8b4436]">
-          <span className="text-[clamp(2.1rem,7.4vw,3.6rem)] tracking-tight">“Unbox your</span>
-          <span className="text-[clamp(2.6rem,9.4vw,4.6rem)] tracking-tight">potential!”</span>
+        {/* both lines share one font, size and case, like the banner lettering */}
+        <h1 className="absolute inset-0 flex -rotate-[4deg] flex-col items-center justify-center pb-[12%] text-center font-sans text-[clamp(2.1rem,7.6vw,3.7rem)] leading-[0.98] font-bold tracking-tight text-[#8b4436] uppercase">
+          {/* search engines and screen readers get the conference name; the bubble keeps the banner slogan */}
+          <span className="sr-only">SASE {event.name}: {event.fullName} at the {event.venue}. </span>
+          <span>“Unbox your</span>
+          <span>potential!”</span>
         </h1>
       </div>
     </motion.div>
@@ -221,25 +199,47 @@ export default function Hero() {
       />
 
       {/* corner clouds */}
+      {/* top-left: rust swoosh with a pink ribbon band along its edge (as in the banner) */}
       <motion.svg
-        viewBox="0 0 420 260"
-        className="absolute -top-10 -left-24 w-[22rem] sm:-left-16 sm:w-[30rem]"
+        viewBox="0 0 600 360"
+        className="absolute top-0 left-0 w-[18rem] sm:w-[30rem] lg:w-[40rem]"
         aria-hidden="true"
         initial={reduce ? false : { x: -80, y: -60, opacity: 0 }}
         animate={{ x: 0, y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
-        <Puffs shapes={cornerLeft} outline={3} highlightMin={50} />
+        {/* every shape leaves the SVG only through its top and left edges (the section's edges), so nothing is cut mid-screen */}
+        <path d="M-20 -20H560C470 50 340 66 238 96 138 126 78 186 48 248 30 288 10 318 -20 352Z" fill="#9a5546" />
+        <path
+          d="M575 -14C480 56 345 80 244 110 146 140 88 198 58 260 40 298 18 328 -16 356"
+          fill="none"
+          stroke={CLOUD_LINE}
+          strokeWidth="36"
+        />
+        <path
+          d="M575 -14C480 56 345 80 244 110 146 140 88 198 58 260 40 298 18 328 -16 356"
+          fill="none"
+          stroke="#f2bcb2"
+          strokeWidth="29"
+        />
+        <path
+          d="M560 -14C468 50 338 72 240 102 142 132 84 190 54 252"
+          fill="none"
+          stroke="#f9d4cc"
+          strokeWidth="6"
+          strokeLinecap="round"
+        />
       </motion.svg>
+      {/* top-right: cream cloud tucked into the corner */}
       <motion.svg
-        viewBox="0 0 360 200"
-        className="absolute -top-4 -right-6 w-[15rem] sm:top-0 sm:-right-4 sm:w-[24rem]"
+        viewBox="0 0 420 240"
+        className="absolute top-0 right-0 w-[13rem] sm:w-[22rem] lg:w-[26rem]"
         aria-hidden="true"
         initial={reduce ? false : { x: 80, y: -60, opacity: 0 }}
         animate={{ x: 0, y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
       >
-        <Puffs shapes={cornerRight} outline={3} highlightMin={50} />
+        <Billows layer={cornerRight} line={3} inset={8} />
       </motion.svg>
 
       {/* sparkles + confetti */}
@@ -287,7 +287,7 @@ export default function Hero() {
       </div>
 
       {/* main stage */}
-      <div className="relative mx-auto grid max-w-6xl items-center gap-6 px-4 pt-8 pb-44 sm:px-6 sm:pb-56 md:grid-cols-[1.05fr_1fr] md:gap-4 md:pt-10 lg:px-8">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-6 px-4 pt-8 pb-48 sm:px-6 sm:pb-64 md:grid-cols-[1.05fr_1fr] md:gap-4 md:pt-10 lg:px-8">
         <motion.div style={{ y: bubbleY }} className="order-1 flex flex-col items-center">
           <SpeechBubble reduce={reduce} />
           <motion.div
@@ -338,11 +338,11 @@ export default function Hero() {
       </div>
 
       {/* cloud bank flowing into the About section */}
-      <div className="pointer-events-none absolute inset-x-0 -bottom-1 h-[150px] sm:h-[220px]" aria-hidden="true">
-        {cloudLayers.map((layer, i) => (
+      <div className="pointer-events-none absolute inset-x-0 -bottom-1 h-[170px] sm:h-[250px]" aria-hidden="true">
+        {bankLayers.map((layer, i) => (
           <motion.svg
             key={i}
-            viewBox="0 0 1600 300"
+            viewBox={`0 0 1600 ${BANK_H}`}
             preserveAspectRatio="xMidYMax slice"
             className="absolute inset-0 h-full w-full"
             initial={reduce ? false : { y: 140 }}
@@ -353,7 +353,7 @@ export default function Hero() {
               animate={reduce ? undefined : { x: [0, layer.drift, 0] }}
               transition={{ duration: layer.duration, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
             >
-              <Puffs shapes={[layer]} outline={4} highlightMin={55} />
+              <Billows layer={layer} line={4} inset={10} />
             </motion.g>
           </motion.svg>
         ))}

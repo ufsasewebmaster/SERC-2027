@@ -5,21 +5,22 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RegistrationTicket from "@/components/RegistrationTicket";
 import { event } from "@/content/site";
+import { pageMetadata, siteUrl } from "@/lib/seo";
 
 const fredoka = Fredoka({ variable: "--font-fredoka", subsets: ["latin"] });
 const unbounded = Unbounded({ variable: "--font-unbounded", subsets: ["latin"], weight: ["600", "800"] });
 const lexend = Lexend({ variable: "--font-lexend", subsets: ["latin"] });
 
-const description = `${event.fullName} 2027, hosted by SASE at the ${event.venue} on ${event.dateLabel}. ${event.theme}!`;
+const homeTitle = `SASE ${event.name} | ${event.fullName} at UF`;
+const description = `SASE's ${event.fullName} (SERC) comes to UF on ${event.dateLabel}: workshops, a career fair, a research symposium and networking. Register now!`;
+
+const home = pageMetadata({ description, path: "/" });
 
 export const metadata: Metadata = {
-  title: { default: `${event.name} | ${event.theme}`, template: `%s | ${event.name}` },
-  description,
-  openGraph: {
-    title: `${event.name} | ${event.theme}`,
-    description,
-    images: [{ url: "/images/og-lockup.jpg", width: 1200, height: 1149, alt: "SERC 2027 red panda climbing out of a box" }],
-  },
+  metadataBase: new URL(siteUrl),
+  title: { default: homeTitle, template: `%s | SASE ${event.name}` },
+  ...home,
+  openGraph: { ...home.openGraph, title: homeTitle },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
