@@ -37,7 +37,7 @@ export function pageMetadata({ title, description, path }: { title?: string; des
 
 /** schema.org Event for the homepage, so search results can show the date, place and price. */
 export function eventJsonLd() {
-  const ticketUrl = registration.paymentLinks[0]?.href ?? siteUrl;
+  const ticketUrl = registration.formUrl || siteUrl;
   return {
     "@context": "https://schema.org",
     "@type": "Event",

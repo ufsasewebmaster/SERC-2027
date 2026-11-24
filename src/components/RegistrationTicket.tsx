@@ -6,8 +6,6 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { event, registration } from "@/content/site";
 import { OPEN_TICKET_EVENT } from "./ticket-events";
 
-type Step = "form" | "sending" | "pay";
-
 /**
  * The raffle ticket that hangs from the top-right corner on every page.
  * It drops in on first load, stays visible while scrolling, and opens the registration pop-up.
@@ -146,13 +144,13 @@ function RegistrationDialog({
   onClose: () => void;
   reduceMotion: boolean;
 }) {
-  const [step, setStep] = useState<Step>("form");
-  const [error, setError] = useState("");
+  const hasForm = Boolean(registration.formUrl);
   const panelRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
 
   // Escape to close, Tab stays inside the pop-up, page behind doesn't scroll.
   useEffect(() => {
+    panelRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key !== "Tab" || !panelRef.current) return;
@@ -162,7 +160,7 @@ function RegistrationDialog({
       if (!focusables.length) return;
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === panelRef.current)) {
         e.preventDefault();
         last.focus();
       } else if (!e.shiftKey && document.activeElement === last) {
@@ -179,39 +177,6 @@ function RegistrationDialog({
     };
   }, [onClose]);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const { formId, fields } = registration.googleForm;
-    setError("");
-
-    if (!formId) {
-      // No Google Form connected yet (see src/content/site.ts) — go straight to payment.
-      setStep("pay");
-      return;
-    }
-
-    setStep("sending");
-    try {
-      const body = new URLSearchParams();
-      body.set(fields.name, String(data.get("name") ?? "").trim());
-      body.set(fields.school, String(data.get("school") ?? "").trim());
-      body.set(fields.email, String(data.get("email") ?? "").trim());
-      // Google Forms doesn't allow reading the response cross-origin, so this is fire-and-forget.
-      await fetch(`https://docs.google.com/forms/d/e/${formId}/formResponse`, {
-        method: "POST",
-        mode: "no-cors",
-        body,
-      });
-      setStep("pay");
-    } catch {
-      setStep("form");
-      setError(
-        "We couldn't save your info — check your connection and try again.",
-      );
-    }
-  }
-
   return (
     <motion.div
       className="fixed inset-0 z-[60] flex items-end justify-center bg-ink/55 p-3 sm:items-center sm:p-6"
@@ -224,6 +189,7 @@ function RegistrationDialog({
     >
       <motion.div
         ref={panelRef}
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
@@ -252,14 +218,14 @@ function RegistrationDialog({
             className="h-auto w-14 sm:w-32"
           />
           <div className="sm:text-center">
-            <p className="font-heading text-s font-bold tracking-[0.25em]">
+            <p className="font-heading text-sm font-bold tracking-[0.25em]">
               ADMIT ONE
             </p>
             <p className="font-display text-xl font-extrabold leading-tight">
               {event.name}
             </p>
             <p className="text-xl">{event.shortDate}</p>
-            <p className="text-l">{event.venue}</p>
+            <p className="text-base">{event.venue}</p>
           </div>
         </div>
 
@@ -270,101 +236,61 @@ function RegistrationDialog({
             aria-label="Close registration"
             className="absolute top-3 right-3 grid size-10 place-items-center rounded-full border-[3px] border-ink bg-paper text-xl leading-none font-bold hover:bg-peach"
           >
-            ×
+            <svg aria-hidden="true" viewBox="0 0 24 24" className="block size-5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
           </button>
 
-          {step !== "pay" ? (
-            <>
-              <h2
-                id={titleId}
-                className="pr-12 font-display text-2xl font-extrabold sm:text-3xl"
+          <h2
+            id={titleId}
+            className="pr-12 font-display text-2xl font-extrabold sm:text-3xl"
+          >
+            Register for SERC!
+          </h2>
+          <PriceLine />
+          <p className="mt-5 text-lg leading-relaxed">
+            Fill in your details, follow the payment instructions, and upload your
+            receipt in our Google Form.
+          </p>
+
+          <ol aria-label="Registration steps" className="mt-6 grid grid-cols-3 gap-2 border-y-2 border-dashed border-ink/25 py-5 sm:gap-4">
+            {[
+              { label: "Your details", color: "bg-sky" },
+              { label: "Payment", color: "bg-blush" },
+              { label: "Receipt", color: "bg-sage" },
+            ].map((step, index) => (
+              <li key={step.label} className="flex flex-col items-center gap-2 text-center">
+                <span aria-hidden="true" className={`grid size-9 place-items-center rounded-full border-2 border-ink font-heading text-sm font-bold shadow-[2px_2px_0_var(--color-ink)] ${step.color}`}>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="font-heading text-xs font-semibold sm:text-sm">{step.label}</span>
+              </li>
+            ))}
+          </ol>
+
+          <div className="mt-6">
+            {hasForm ? (
+              <a
+                href={registration.formUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn w-full bg-sage text-center text-base sm:text-lg"
               >
-                Register for SERC!
-              </h2>
-              <PriceLine />
-              <form onSubmit={handleSubmit} className="mt-5 space-y-4">
-                <Field
-                  label="Full name"
-                  name="name"
-                  autoComplete="name"
-                  autoFocus
-                />
-                <Field
-                  label="School"
-                  name="school"
-                  autoComplete="organization"
-                />
-                <Field
-                  label="Email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                />
-                {error && (
-                  <p
-                    role="alert"
-                    className="rounded-xl bg-blush px-3 py-2 text-sm font-medium"
-                  >
-                    {error}
-                  </p>
-                )}
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
-                  <button
-                    type="submit"
-                    disabled={step === "sending"}
-                    className="btn bg-sage text-lg disabled:opacity-60"
-                  >
-                    {step === "sending" ? "Saving…" : "Save my spot →"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStep("pay")}
-                    className="text-sm"
-                  >
-                    Already filled this out?{" "}
-                    <span className="underline underline-offset-4">Go to payment</span>
-                  </button>
-                </div>
-              </form>
-            </>
-          ) : (
-            <>
-              <h2
-                id={titleId}
-                className="pr-12 font-display text-2xl font-extrabold sm:text-3xl"
-              >
-                Choose your registration
-              </h2>
-              <p className="mt-2 text-lg">
-                Choose individual or chapter registration to complete payment.
-              </p>
-              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                {registration.paymentLinks.map((p) => (
-                  <li key={p.href}>
-                    <a
-                      href={p.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="sticker flex h-full flex-col bg-sky px-4 py-4 transition-transform hover:-translate-y-1"
-                    >
-                      <span className="font-display text-lg font-extrabold">
-                        {p.label}&nbsp;↗
-                      </span>
-                      <span className="text-sm">{p.description}</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-              <PriceLine />
-              <button
-                type="button"
-                onClick={() => setStep("form")}
-                className="mt-4 text-sm underline underline-offset-4"
-              >
-                ← Edit my info
+                Continue to registration <span aria-hidden="true">↗</span>
+                <span className="sr-only"> (opens Google Form in a new tab)</span>
+              </a>
+            ) : (
+              <button type="button" disabled className="btn w-full cursor-not-allowed bg-sage text-base opacity-60 sm:text-lg">
+                Continue to registration
               </button>
-            </>
-          )}
+            )}
+            <p className="mt-3 text-center text-sm text-rust">
+              {hasForm ? "Opens Google Forms in a new tab." : "The registration form will be available here soon."}
+            </p>
+          </div>
+          <p className="mt-5 text-sm leading-relaxed text-ink/80">
+            Our team will review your payment receipt and confirm your registration.
+          </p>
         </div>
       </motion.div>
     </motion.div>
@@ -377,39 +303,11 @@ function PriceLine() {
       <span className="font-display text-3xl font-extrabold text-rust">
         {registration.price}
       </span>
-      <span className="text-2xl">per person</span>
-      <span className="text-1xl">
+      <span className="text-base">per person</span>
+      <span className="text-sm text-ink/75">
         ({registration.latePrice} after{" "}
         {registration.lateDeadline || "the early deadline"})
       </span>
     </p>
-  );
-}
-
-function Field({
-  label,
-  name,
-  type = "text",
-  autoComplete,
-  autoFocus,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  autoComplete?: string;
-  autoFocus?: boolean;
-}) {
-  return (
-    <label className="block">
-      <span className="mb-1 block font-semibold">{label}</span>
-      <input
-        name={name}
-        type={type}
-        required
-        autoComplete={autoComplete}
-        autoFocus={autoFocus}
-        className="w-full rounded-xl border-[3px] border-ink bg-white px-3 py-2.5 text-lg outline-none focus:border-slate focus:ring-4 focus:ring-sky"
-      />
-    </label>
   );
 }

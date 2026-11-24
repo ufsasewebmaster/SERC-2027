@@ -31,34 +31,10 @@ export const registration = {
   latePrice: "$45",
   // TODO: the date the price goes up, e.g. "December 20".
   lateDeadline: "",
-  /**
-   * Google Form the on-site form submits to.
-   * 1. Open the form → ⋮ → "Get pre-filled link", type sample answers, copy the link.
-   * 2. formId is the long id in that link (…/forms/d/e/<formId>/viewform).
-   * 3. Each answer appears as entry.<number>=<answer>; copy each number below.
-   * The form must NOT require sign-in or "collect email addresses" (use a normal question instead).
-   * While formId is empty, the site skips sending and goes straight to the payment step.
-   */
-  googleForm: {
-    formId: "", // TODO
-    fields: {
-      name: "entry.0000000001", // TODO
-      school: "entry.0000000002", // TODO
-      email: "entry.0000000003", // TODO
-    },
-  },
-  paymentLinks: [
-    {
-      label: "Solo Registration",
-      description: "Registering just yourself",
-      href: "https://serc.stemconnect.events/en/registration-form",
-    },
-    {
-      label: "Chapter Packs",
-      description: "Registering your chapter as a group",
-      href: "https://buy.stripe.com/7sYaEY9Lg5OPgvwayD1sQ01",
-    },
-  ],
+  // TODO: add the published Google Form responder URL (/viewform or forms.gle).
+  // The form collects attendee details, explains payment, and accepts receipt uploads.
+  // Leave empty until ready; the ticket shows a disabled button instead of an old link.
+  formUrl: "",
 };
 
 export const about = {
@@ -131,10 +107,6 @@ export const faqs: Faq[] = [
   {
     q: "How much does it cost to attend?",
     a: "Registration is $35 per person. The price goes up to $45 after the early registration deadline, so grab your ticket early!",
-  },
-  {
-    q: "Can my chapter register as a group?",
-    a: "Yes! Choose “Chapter Packs” when you register to sign your chapter up together. Individuals can choose “Solo Registration.”",
   },
   {
     q: "Who can attend SERC?",
