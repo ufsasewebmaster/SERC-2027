@@ -71,7 +71,7 @@ export default function RegistrationTicket() {
               onClick={() => setOpen(true)}
               aria-haspopup="dialog"
               aria-expanded={open}
-              className="group relative -mt-1 block w-[96px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-[224px]"
+              className="group relative -mt-1 block w-[112px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-[224px]"
             >
               <TicketShape className="block w-full" />
               <span className="absolute inset-0 flex items-center">

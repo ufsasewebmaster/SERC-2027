@@ -154,21 +154,24 @@ function AlertMarks({ side, color, reduce }: { side: "left" | "right"; color: st
 function SpeechBubble({ reduce }: { reduce: boolean }) {
   return (
     <motion.div
-      className="relative mx-auto w-full max-w-[34rem]"
+      className="relative mx-auto w-full max-w-[34rem] max-md:order-1 max-md:max-w-[20rem]"
       style={{ originX: 0.85, originY: 0.95 }}
       initial={reduce ? false : { scale: 0, rotate: -14, opacity: 0 }}
       animate={{ scale: 1, rotate: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 170, damping: 11, delay: 0.75 }}
     >
-      <div className={reduce ? "" : "animate-float"}>
-        <svg viewBox="0 0 520 380" className="w-full drop-shadow-[0_6px_0_rgba(74,36,32,0.12)]" aria-hidden="true">
+      <div className={reduce ? "" : "animate-float max-md:animate-none"}>
+        <svg viewBox="0 0 520 300" className="w-full drop-shadow-[0_6px_0_rgba(74,36,32,0.12)] md:hidden" aria-hidden="true">
+          <path d="M260 18c140 0 238 52 238 124 0 54-48 96-116 114l42 36-88-26c-24 4-50 6-76 6C120 272 22 220 22 144S120 18 260 18Z" fill="var(--color-kraft)" />
+        </svg>
+        <svg viewBox="0 0 520 380" className="hidden w-full drop-shadow-[0_6px_0_rgba(74,36,32,0.12)] md:block" aria-hidden="true">
           <path
             d="M262 22c140 0 236 70 236 160 0 66-46 116-112 140l58 52-104-38c-24 6-50 8-78 8C120 344 22 274 22 182S122 22 262 22Z"
             fill="var(--color-kraft)"
           />
         </svg>
         {/* both lines share one font, size and case, like the banner lettering */}
-        <h1 className="absolute inset-0 flex -rotate-[4deg] flex-col items-center justify-center text-center font-sans text-[clamp(2.1rem,7.6vw,3.7rem)] leading-[0.98] font-bold tracking-tight text-[#8b4436] uppercase">
+        <h1 className="absolute inset-0 flex -rotate-[4deg] flex-col items-center justify-center text-center font-sans text-[clamp(2.1rem,7.6vw,3.7rem)] leading-[0.98] font-bold tracking-tight text-[#8b4436] uppercase max-md:-rotate-2 max-md:pb-[5%] max-md:text-[clamp(1.8rem,7.5vw,2.4rem)]">
           {/* search engines and screen readers get the conference name; the bubble keeps the banner slogan */}
           <span className="sr-only">SASE {event.name}: {event.fullName} at the {event.venue}. </span>
           <span>“Unbox your</span>
@@ -259,14 +262,14 @@ export default function Hero() {
       <Curl className="right-[6%] bottom-[34%] w-12 sm:w-16" delay={1.4} />
 
       {/* ribbon — side padding on lg keeps it clear of the hanging registration ticket */}
-      <div className="relative px-4 pt-28 sm:pt-40 lg:px-52 lg:pt-8">
+      <div className="relative px-4 pt-28 sm:pt-40 lg:px-52 lg:pt-8 max-md:pt-24">
         <div
-          className="relative mx-auto flex max-w-4xl items-center justify-center"
+          className="relative mx-auto flex max-w-4xl items-center justify-center max-md:max-w-[20rem]"
         >
           <RibbonCurl side="left" />
-          <p className="relative z-10 flex w-full justify-center rounded-full border-[3px] border-ink bg-paper px-6 py-3 shadow-[0_4px_0_var(--color-ink)] sm:py-4">
+          <p className="relative z-10 flex w-full justify-center rounded-full border-[3px] border-ink bg-paper px-6 py-3 shadow-[0_4px_0_var(--color-ink)] sm:py-4 max-md:rounded-2xl max-md:px-4 max-md:py-2.5">
             <span className="sr-only">{RIBBON}</span>
-            <span aria-hidden="true" className="flex flex-col items-center gap-1 font-heading text-xs leading-snug font-bold tracking-[0.12em] text-ink uppercase sm:flex-row sm:gap-[0.6em] sm:text-sm sm:tracking-[0.18em] lg:text-lg xl:text-xl xl:tracking-[0.22em]">
+            <span aria-hidden="true" className="flex flex-col items-center gap-1 font-heading text-xs leading-snug font-bold tracking-[0.12em] text-ink uppercase sm:flex-row sm:gap-[0.6em] sm:text-sm sm:tracking-[0.18em] lg:text-lg xl:text-xl xl:tracking-[0.22em] max-md:flex-col max-md:gap-0.5 max-md:text-xs max-md:tracking-[0.1em]">
               {["SOUTHEAST REGIONAL", "CONFERENCE"].map((line) => (
                 <span key={line} className="flex whitespace-nowrap">
                   {line}
@@ -279,28 +282,30 @@ export default function Hero() {
       </div>
 
       {/* main stage */}
-      <div className="relative mx-auto grid max-w-6xl items-center gap-6 px-4 pt-8 pb-48 sm:px-6 sm:pb-64 md:grid-cols-[1.05fr_1fr] md:gap-4 md:pt-10 lg:px-8">
-        <motion.div style={{ y: bubbleY }} className="order-1 flex flex-col items-center">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-6 px-4 pt-8 pb-48 sm:px-6 sm:pb-64 md:grid-cols-[1.05fr_1fr] md:gap-4 md:pt-10 lg:px-8 max-md:gap-3 max-md:pt-5 max-md:pb-36">
+        <motion.div style={{ y: bubbleY }} className="order-1 flex flex-col items-center max-md:contents">
           <SpeechBubble reduce={reduce} />
           <motion.div
-            className="mt-2 flex flex-col items-center text-center"
+            className="mt-2 flex flex-col items-center text-center max-md:relative max-md:z-10 max-md:order-3 max-md:mx-auto max-md:w-full max-md:max-w-[22rem]"
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.15, duration: 0.5 }}
           >
-            <p className="rounded-full border-[3px] border-ink bg-paper px-4 py-1.5 font-heading font-semibold sm:text-lg">
-              {event.shortDate} | {event.venue}
+            <p className="rounded-full border-[3px] border-ink bg-paper px-4 py-1.5 font-heading font-semibold sm:text-lg max-md:rounded-2xl max-md:text-base">
+              <span className="max-md:block">{event.shortDate}</span>
+              <span className="max-md:hidden"> | </span>
+              <span className="max-md:block">{event.venue}</span>
             </p>
-            <div className="mt-5 flex flex-wrap justify-center gap-3 sm:gap-4">
-              <RegisterButton />
-              <a href="#box" className="btn bg-paper text-lg">
+            <div className="mt-5 flex flex-wrap justify-center gap-3 sm:gap-4 max-md:mt-4 max-md:grid max-md:w-full max-md:grid-cols-2">
+              <RegisterButton className="bg-star max-md:px-3 max-md:text-sm" />
+              <a href="#box" className="btn bg-paper text-lg max-md:px-3 max-md:text-sm">
                 What&apos;s in the Box?
               </a>
             </div>
           </motion.div>
         </motion.div>
 
-        <motion.div style={{ y: pandaY }} className="relative z-10 order-2 mx-auto w-[78%] max-w-[26rem] md:w-full">
+        <motion.div style={{ y: pandaY }} className="relative z-10 order-2 mx-auto w-[78%] max-w-[26rem] md:w-full max-md:w-[68%] max-md:max-w-[18rem] max-md:transform-none!">
           <motion.div
             style={{ originY: 1 }}
             initial={reduce ? false : { y: -40, opacity: 0 }}
@@ -320,7 +325,7 @@ export default function Hero() {
                   width={605}
                   height={715}
                   priority
-                  sizes="(min-width: 768px) 26rem, 78vw"
+                  sizes="(min-width: 768px) 26rem, 68vw"
                   className="relative h-auto w-full drop-shadow-[0_10px_0_rgba(74,36,32,0.15)]"
                 />
               </motion.div>

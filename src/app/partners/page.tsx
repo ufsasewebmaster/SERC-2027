@@ -17,7 +17,7 @@ export default function PartnersPage() {
     <>
       <PageHeader eyebrow="Partners" title="Industry Partners" color="bg-blush">
         <p>
-          Our partners lead workshops and meet students through recruiting and networking events at SERC.
+          Our industry partners help bring SERC to life, creating opportunities for students to connect, learn, and grow.
         </p>
       </PageHeader>
 
