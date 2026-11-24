@@ -49,7 +49,7 @@ export default function TeamBoxes() {
           }}
           className="btn bg-paper"
         >
-          {allOpen ? "Close all the boxes" : "Unbox everyone"}
+          {allOpen ? "Close All the Boxes" : "Unbox Everyone"}
         </button>
       </div>
       <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">

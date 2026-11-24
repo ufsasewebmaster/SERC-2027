@@ -66,7 +66,7 @@ export const schedule: ScheduleBlock[] = [
     ],
   },
   {
-    title: "Lunch & activities",
+    title: "Lunch & Activities",
     activities: [
       { title: "Lunch", start: "12:50", end: "14:50", category: "meal" },
       {

@@ -44,7 +44,7 @@ export default function Countdown() {
       <Sparkle className="absolute bottom-16 left-[10%] w-7 animate-twinkle" color="var(--color-paper)" />
 
       <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6">
-        <h2 className="section-title">Countdown to unboxing</h2>
+        <h2 className="section-title">Countdown to Unboxing</h2>
         {/* <p className="mt-3 text-lg text-paper sm:text-xl">
           {event.dateLabel} · {event.venue}
         </p> */}

@@ -289,12 +289,12 @@ export default function Hero() {
             transition={{ delay: 1.15, duration: 0.5 }}
           >
             <p className="rounded-full border-[3px] border-ink bg-paper px-4 py-1.5 font-heading font-semibold sm:text-lg">
-              {event.shortDate} at the {event.venue}
+              {event.shortDate} | {event.venue}
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3 sm:gap-4">
               <RegisterButton />
               <a href="#box" className="btn bg-paper text-lg">
-                What&apos;s in the box?
+                What&apos;s in the Box?
               </a>
             </div>
           </motion.div>

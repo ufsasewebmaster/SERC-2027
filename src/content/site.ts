@@ -18,6 +18,7 @@ export const event = {
   startsAt: "2027-01-17T08:00:00-05:00",
   // TODO: confirm the best contact address for SERC 2027.
   contactEmail: "serc@saseconnect.org",
+  partnershipEmail: "ufsase.conference@gmail.com",
 };
 
 export const socials = [
@@ -44,8 +45,8 @@ export const about = {
     "This year, SERC is coming to the University of Florida on Sunday, January 17, 2027!",
   ],
   stats: [
-    { value: "300+", label: "attendees" },
-    { value: "12+", label: "universities" },
+    { value: "500+", label: "attendees" },
+    { value: "15+", label: "universities" },
     { value: "1", label: "jam-packed day" },
   ],
   pillars: [
@@ -75,12 +76,12 @@ export const whatsInTheBox: BoxItem[] = [
   },
   {
     title: "Career Fair",
-    body: "Connect one-on-one with company representatives and recruiters! Explore internship and full-time opportunities, learn about different career paths, and build professional connections.",
+    body: "Connect one-on-one with company representatives and recruiters! Explore internship and full-time opportunities, get a chance to interview directly with companies, learn about different career paths, and build professional connections.",
   },
   {
     title: "Research Symposium",
     body: "Explore exciting research projects presented by students from across the Southeast! Learn and discover innovative research, and connect with fellow student researchers.",
-    link: { label: "Learn more or apply to present", href: "/symposium" },
+    link: { label: "Learn More or Apply to Present", href: "/symposium" },
   },
   {
     title: "Design Challenges",
@@ -119,7 +120,7 @@ export const faqs: Faq[] = [
   {
     q: "Can I present my research?",
     a: "Absolutely. Apply to present a poster at the SERC Research Symposium.",
-    link: { label: "Go to the Research Symposium page", href: "/symposium" },
+    link: { label: "Go to the Research Symposium Page", href: "/symposium" },
   },
   {
     q: "Where can I find the latest updates?",

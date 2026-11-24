@@ -12,7 +12,7 @@ export default function WhatsInTheBox() {
       <Wave color="var(--color-rust)" />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center text-paper">
-          <h2 className="section-title">What&apos;s in the box?</h2>
+          <h2 className="section-title">What&apos;s in the Box?</h2>
         </div>
         <div className="mt-10">
           <Accordion
@@ -34,9 +34,9 @@ export default function WhatsInTheBox() {
           />
         </div>
         <div className="mt-12 text-center">
-          <p className="font-display text-2xl font-extrabold text-paper sm:text-3xl">Ready to unbox?</p>
+          <p className="font-display text-2xl font-extrabold text-paper sm:text-3xl">Ready to Unbox?</p>
           <div className="mt-5">
-            <RegisterButton>Register here!</RegisterButton>
+            <RegisterButton>Register Here!</RegisterButton>
           </div>
         </div>
       </div>

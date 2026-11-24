@@ -29,8 +29,8 @@ export default function Faq() {
         </div>
         <p className="mt-10 text-center text-lg">
           Didn&apos;t find your answer? Email us at{" "}
-          <a href={`mailto:${event.contactEmail}`} className="font-semibold text-rust underline underline-offset-4">
-            {event.contactEmail}
+          <a href={`mailto:${event.partnershipEmail}`} className="font-semibold text-rust underline underline-offset-4">
+            {event.partnershipEmail}
           </a>
         </p>
       </div>

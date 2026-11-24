@@ -45,7 +45,7 @@ export default function SchedulePage() {
   const dayEnd = finalActivities[finalActivities.length - 1].end;
   return (
     <>
-      <PageHeader eyebrow="Schedule" title="Your day at SERC" />
+      <PageHeader eyebrow="Schedule" title="Your Day at SERC" />
 
       <section aria-label="Conference schedule" className="bg-paper px-4 py-12 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-4xl">

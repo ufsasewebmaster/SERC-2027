@@ -47,7 +47,7 @@ export default function About() {
           ))}
         </div>
 
-        <h3 className="mt-16 text-center font-heading text-xl font-semibold tracking-[0.15em] uppercase">From past SERCs</h3>
+        <h3 className="mt-16 text-center font-heading text-xl font-semibold tracking-[0.15em] uppercase">From Past SERCs</h3>
         <ul className="mt-6 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
           {about.photos.map((photo, i) => (
             <li

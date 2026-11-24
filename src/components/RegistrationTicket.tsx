@@ -71,23 +71,23 @@ export default function RegistrationTicket() {
               onClick={() => setOpen(true)}
               aria-haspopup="dialog"
               aria-expanded={open}
-              className="group relative -mt-1 block w-[104px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-62.5"
+              className="group relative -mt-1 block w-[96px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-[224px]"
             >
               <TicketShape className="block w-full" />
               <span className="absolute inset-0 flex items-center">
                 <span className="flex w-[30%] items-center justify-center self-stretch">
-                  <span className="font-heading text-[0.5rem] font-bold tracking-[0.2em] [writing-mode:vertical-rl] rotate-180 sm:text-[0.85rem]">
+                  <span className="font-heading text-[0.5rem] font-bold tracking-[0.2em] [writing-mode:vertical-rl] rotate-180 sm:text-[0.75rem]">
                     ADMIT ONE
                   </span>
                 </span>
                 <span className="flex flex-1 flex-col items-center leading-none">
-                  <span className="font-heading text-[0.5rem] font-semibold tracking-[0.18em] sm:text-[0.9rem]">
+                  <span className="font-heading text-[0.5rem] font-semibold tracking-[0.18em] sm:text-[0.8rem]">
                     SERC 2027
                   </span>
-                  <span className="mt-1 font-display text-[0.62rem] font-extrabold sm:text-[1.2rem]">
+                  <span className="mt-1 font-display text-[0.62rem] font-extrabold sm:text-[1.05rem]">
                     REGISTER
                   </span>
-                  <span className="mt-1 rounded-full bg-ink px-1.5 py-0.5 text-[0.55rem] font-semibold text-paper sm:text-2xl">
+                  <span className="mt-1 rounded-full bg-ink px-1.5 py-0.5 text-[0.55rem] font-semibold text-paper sm:text-xl">
                     {registration.price}
                   </span>
                 </span>
@@ -249,13 +249,13 @@ function RegistrationDialog({
           </h2>
           <PriceLine />
           <p className="mt-5 text-lg leading-relaxed">
-            Fill in your details, follow the payment instructions, and upload your
-            receipt in our Google Form.
+            Ready to register? Click the button below and follow the steps in our
+            registration form to secure your spot!
           </p>
 
           <ol aria-label="Registration steps" className="mt-6 grid grid-cols-3 gap-2 border-y-2 border-dashed border-ink/25 py-5 sm:gap-4">
             {[
-              { label: "Your details", color: "bg-sky" },
+              { label: "Your Details", color: "bg-sky" },
               { label: "Payment", color: "bg-blush" },
               { label: "Receipt", color: "bg-sage" },
             ].map((step, index) => (
@@ -276,12 +276,12 @@ function RegistrationDialog({
                 rel="noopener noreferrer"
                 className="btn w-full bg-sage text-center text-base sm:text-lg"
               >
-                Continue to registration <span aria-hidden="true">↗</span>
+                Save My Spot! <span aria-hidden="true">↗</span>
                 <span className="sr-only"> (opens Google Form in a new tab)</span>
               </a>
             ) : (
               <button type="button" disabled className="btn w-full cursor-not-allowed bg-sage text-base opacity-60 sm:text-lg">
-                Continue to registration
+                Save My Spot!
               </button>
             )}
             <p className="mt-3 text-center text-sm text-rust">

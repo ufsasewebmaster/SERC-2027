@@ -15,7 +15,7 @@ export const metadata: Metadata = pageMetadata({
 export default function PartnersPage() {
   return (
     <>
-      <PageHeader eyebrow="Partners" title="Industry partners" color="bg-blush">
+      <PageHeader eyebrow="Partners" title="Industry Partners" color="bg-blush">
         <p>
           Our partners lead workshops and meet students through recruiting and networking events at SERC.
         </p>
@@ -23,7 +23,7 @@ export default function PartnersPage() {
 
       <section className="bg-paper px-4 py-16 sm:py-20">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-center font-heading text-2xl font-bold sm:text-3xl">Our 2027 partners</h2>
+          <h2 className="text-center font-heading text-2xl font-bold sm:text-3xl">Our 2027 Partners</h2>
           {partners.length > 0 ? (
             <ul className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
               {partners.map((p) => {
@@ -61,10 +61,10 @@ export default function PartnersPage() {
           )}
 
           <div className="sticker mx-auto mt-16 max-w-2xl bg-sky p-6 text-center sm:p-8">
-            <h2 className="font-display text-2xl font-extrabold">Interested in partnering?</h2>
-            <p className="mt-2 text-lg">We&apos;d love to have you at SERC 2027.</p>
-            <a href={`mailto:${event.contactEmail}?subject=SERC%202027%20Partnership`} className="btn mt-5 bg-paper">
-              Email {event.contactEmail}
+            <h2 className="font-display text-2xl font-extrabold">Interested in Partnering?</h2>
+            <p className="mt-2 text-lg">We&apos;d love to have you at SERC 2027!</p>
+            <a href={`mailto:${event.partnershipEmail}?subject=SERC%202027%20Partnership`} className="btn mt-5 bg-paper">
+              Email {event.partnershipEmail}
             </a>
           </div>
         </div>

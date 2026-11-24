@@ -37,7 +37,7 @@ export default function Footer() {
         </div>
 
         <FooterList title="Explore" links={sectionLinks} />
-        <FooterList title="Pages" links={pageLinks} extra={{ href: `mailto:${event.contactEmail}`, label: "Contact us" }} />
+        <FooterList title="Pages" links={pageLinks} extra={{ href: `mailto:${event.contactEmail}`, label: "Contact Us" }} />
       </div>
       {/* <div className="border-t-2 border-paper/20 px-4 py-5 text-center font-heading text-sm tracking-[0.18em] text-paper">
         SERC 2027 | UNIVERSITY OF FLORIDA | JANUARY 17TH, 2027

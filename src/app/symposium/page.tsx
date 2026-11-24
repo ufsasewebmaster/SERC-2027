@@ -18,12 +18,12 @@ const highlights = [
     color: "bg-sky",
   },
   {
-    title: "Get feedback",
+    title: "Get Feedback",
     body: "Judges evaluate each presentation, and you'll swap ideas with everyone who stops by.",
     color: "bg-blush",
   },
   {
-    title: "Win awards",
+    title: "Win Awards",
     body: "Awards include overall best poster, people's choice, and honorable mentions.",
     color: "bg-sage",
   },
@@ -36,7 +36,7 @@ export default function SymposiumPage() {
     <>
       <PageHeader
         eyebrow="Research Symposium"
-        title="Showcase your research"
+        title="Showcase Your Research"
         color="bg-sky"
       >
         <p>
@@ -64,7 +64,7 @@ export default function SymposiumPage() {
               />
             </span>
             <span className="btn mt-6 bg-rust text-xl text-paper">
-              Apply to present
+              Apply to Present
             </span>
           </a>
           {!hasLink && (

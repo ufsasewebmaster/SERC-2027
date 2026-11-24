@@ -3,7 +3,7 @@
 import { openTicket } from "./ticket-events";
 
 export default function RegisterButton({
-  children = "Register now",
+  children = "Register Now",
   className = "bg-star",
 }: {
   children?: React.ReactNode;

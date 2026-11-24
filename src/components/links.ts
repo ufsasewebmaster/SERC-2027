@@ -1,6 +1,6 @@
 export const sectionLinks = [
   { href: "/#about", label: "About" },
-  { href: "/#box", label: "What's in the box?" },
+  { href: "/#box", label: "What's in the Box?" },
   { href: "/#team", label: "Team" },
   // { href: "/#countdown", label: "Countdown" },
   { href: "/#faq", label: "FAQs" },
