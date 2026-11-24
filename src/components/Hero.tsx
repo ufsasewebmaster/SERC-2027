@@ -168,7 +168,7 @@ function SpeechBubble({ reduce }: { reduce: boolean }) {
           />
         </svg>
         {/* both lines share one font, size and case, like the banner lettering */}
-        <h1 className="absolute inset-0 flex -rotate-[4deg] flex-col items-center justify-center pb-[12%] text-center font-sans text-[clamp(2.1rem,7.6vw,3.7rem)] leading-[0.98] font-bold tracking-tight text-[#8b4436] uppercase">
+        <h1 className="absolute inset-0 flex -rotate-[4deg] flex-col items-center justify-center text-center font-sans text-[clamp(2.1rem,7.6vw,3.7rem)] leading-[0.98] font-bold tracking-tight text-[#8b4436] uppercase">
           {/* search engines and screen readers get the conference name; the bubble keeps the banner slogan */}
           <span className="sr-only">SASE {event.name}: {event.fullName} at the {event.venue}. </span>
           <span>“Unbox your</span>
@@ -297,7 +297,7 @@ export default function Hero() {
             transition={{ delay: 1.15, duration: 0.5 }}
           >
             <p className="rounded-full border-[3px] border-ink bg-paper px-4 py-1.5 font-heading font-semibold sm:text-lg">
-              {event.shortDate} · {event.venue}
+              {event.shortDate} at the {event.venue}
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3 sm:gap-4">
               <RegisterButton />

@@ -13,10 +13,7 @@ export default function WhatsInTheBox() {
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <div className="text-center text-paper">
           <Sparkle className="mx-auto mb-3 w-8" color="var(--color-star)" />
-          <h2 className="section-title">So, what&apos;s in the box?</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-paper sm:text-xl">
-            Every SERC ticket comes packed with a full day of surprises. Open each one to see what&apos;s inside.
-          </p>
+          <h2 className="section-title">What&apos;s in the box?</h2>
         </div>
         <div className="mt-10">
           <Accordion

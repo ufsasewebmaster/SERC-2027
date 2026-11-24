@@ -9,9 +9,6 @@ export default function Faq() {
       <Wave color="var(--color-peach)" />
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <h2 className="section-title text-center">FAQs</h2>
-        <p className="mt-4 text-center text-lg sm:text-xl">
-          Still curious? Here&apos;s everything else you might want to know.
-        </p>
         <div className="mt-10">
           <Accordion
             colors={["bg-paper"]}

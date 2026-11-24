@@ -65,7 +65,7 @@ export const about = {
   paragraphs: [
     "The Southeast Regional Conference (SERC) is an annual conference hosted by the Society of Asian Scientists and Engineers (SASE), bringing together students from chapters across the Southeast.",
     "Designed for STEM students at all stages of their academic and professional journeys, SERC offers a full day of professional development, industry networking, and leadership growth opportunities.",
-    "This year, SERC is coming to the University of Florida on January 17, 2027!",
+    "This year, SERC is coming to the University of Florida on Sunday, January 17, 2027!",
   ],
   stats: [
     { value: "300+", label: "attendees" },

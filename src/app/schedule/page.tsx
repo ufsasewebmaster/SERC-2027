@@ -16,13 +16,13 @@ export default function SchedulePage() {
   return (
     <>
       <PageHeader eyebrow="Schedule" title="What's the plan?">
-        <p>We&apos;re still packing this box. Give it a try anyway…</p>
+        <p>The full conference schedule is coming soon.</p>
       </PageHeader>
       <section className="bg-paper px-4 py-16 sm:py-20">
         <SealedBox />
         {instagram && (
           <p className="mt-10 text-center text-lg">
-            Want to know the moment it drops? Follow{" "}
+            For schedule updates, follow{" "}
             <a href={instagram.href} target="_blank" rel="noopener noreferrer" className="font-semibold text-rust underline underline-offset-4">
               {instagram.handle}
             </a>{" "}
