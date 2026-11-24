@@ -28,7 +28,7 @@ npm run build    # production build (all pages are static)
 ## Pages
 
 - `/` — scrolling homepage: hero, About, What's in the box?, team blind boxes, countdown, FAQs
-- `/schedule` — "coming soon" sealed box
+- `/schedule` — conference timeline; edit times and activities in `src/content/schedule.ts`
 - `/partners` — partner logo grid
 - `/symposium` — research symposium + apply button
 

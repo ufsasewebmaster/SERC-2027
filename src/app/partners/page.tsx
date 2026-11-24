@@ -62,7 +62,7 @@ export default function PartnersPage() {
 
           <div className="sticker mx-auto mt-16 max-w-2xl bg-sky p-6 text-center sm:p-8">
             <h2 className="font-display text-2xl font-extrabold">Interested in partnering?</h2>
-            <p className="mt-2 text-lg">We&apos;d love to have your company at SERC 2027.</p>
+            <p className="mt-2 text-lg">We&apos;d love to have you at SERC 2027.</p>
             <a href={`mailto:${event.contactEmail}?subject=SERC%202027%20Partnership`} className="btn mt-5 bg-paper">
               Email {event.contactEmail}
             </a>

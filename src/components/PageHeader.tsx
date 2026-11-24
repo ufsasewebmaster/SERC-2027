@@ -24,7 +24,7 @@ export default function PageHeader({
         <h1 className="mt-5 font-display text-[clamp(2.25rem,7vw,4.5rem)] leading-[0.98] font-extrabold tracking-tight">
           {title}
         </h1>
-        {children && <div className="mx-auto mt-5 max-w-2xl text-lg sm:text-xl">{children}</div>}
+        {children && <div className="mx-auto mt-5 max-w-2xl text-xl sm:text-2xl">{children}</div>}
       </div>
     </section>
   );
