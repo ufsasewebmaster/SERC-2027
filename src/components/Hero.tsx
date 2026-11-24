@@ -260,30 +260,22 @@ export default function Hero() {
 
       {/* ribbon — side padding on lg keeps it clear of the hanging registration ticket */}
       <div className="relative px-4 pt-28 sm:pt-40 lg:px-52 lg:pt-8">
-        <motion.div
+        <div
           className="relative mx-auto flex max-w-4xl items-center justify-center"
-          initial={reduce ? false : { scaleX: 0.15, opacity: 0, y: -24 }}
-          animate={{ scaleX: 1, opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 120, damping: 16, delay: 0.1 }}
         >
           <RibbonCurl side="left" />
-          <p className="relative z-10 flex w-full justify-center rounded-full border-[3px] border-ink bg-paper py-2 shadow-[0_4px_0_var(--color-ink)] sm:py-2.5">
+          <p className="relative z-10 flex w-full justify-center rounded-full border-[3px] border-ink bg-paper px-6 py-3 shadow-[0_4px_0_var(--color-ink)] sm:py-4">
             <span className="sr-only">{RIBBON}</span>
-            <span aria-hidden="true" className="flex font-heading text-[0.62rem] font-bold tracking-[0.2em] text-ink uppercase sm:text-sm sm:tracking-[0.42em] xl:text-base xl:tracking-[0.55em]">
-              {RIBBON.split("").map((ch, i) => (
-                <motion.span
-                  key={i}
-                  initial={reduce ? false : { opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35 + i * 0.022 }}
-                >
-                  {ch === " " ? " " : ch}
-                </motion.span>
+            <span aria-hidden="true" className="flex flex-col items-center gap-1 font-heading text-xs leading-snug font-bold tracking-[0.12em] text-ink uppercase sm:flex-row sm:gap-[0.6em] sm:text-sm sm:tracking-[0.18em] lg:text-lg xl:text-xl xl:tracking-[0.22em]">
+              {["SOUTHEAST REGIONAL", "CONFERENCE"].map((line) => (
+                <span key={line} className="flex whitespace-nowrap">
+                  {line}
+                </span>
               ))}
             </span>
           </p>
           <RibbonCurl side="right" />
-        </motion.div>
+        </div>
       </div>
 
       {/* main stage */}
@@ -308,12 +300,12 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div style={{ y: pandaY }} className="order-2 mx-auto w-[78%] max-w-[26rem] md:w-full">
+        <motion.div style={{ y: pandaY }} className="relative z-10 order-2 mx-auto w-[78%] max-w-[26rem] md:w-full">
           <motion.div
             style={{ originY: 1 }}
-            initial={reduce ? false : { y: -520, opacity: 0 }}
-            animate={reduce ? { opacity: 1 } : { y: [-520, 0, -26, 0], scaleY: [1, 0.86, 1.05, 1], scaleX: [1, 1.1, 0.97, 1], opacity: 1 }}
-            transition={{ duration: 1.15, delay: 0.3, times: [0, 0.5, 0.75, 1], ease: "easeOut" }}
+            initial={reduce ? false : { y: -40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: reduce ? 0 : 0.65, delay: reduce ? 0 : 0.3, ease: "easeOut" }}
           >
             <div className={reduce ? "" : "animate-bob [animation-delay:1.6s]"}>
               <motion.div
@@ -338,13 +330,14 @@ export default function Hero() {
       </div>
 
       {/* cloud bank flowing into the About section */}
-      <div className="pointer-events-none absolute inset-x-0 -bottom-1 h-[170px] sm:h-[250px]" aria-hidden="true">
+      <div className="pointer-events-none absolute inset-x-0 -bottom-1 z-0 h-[170px] sm:h-[250px]" aria-hidden="true">
         {bankLayers.map((layer, i) => (
           <motion.svg
             key={i}
             viewBox={`0 0 1600 ${BANK_H}`}
             preserveAspectRatio="xMidYMax slice"
-            className="absolute inset-0 h-full w-full"
+            // Wide screens scale the SVG taller than its box; keep the cloud tops visible.
+            className="absolute inset-0 h-full w-full overflow-visible"
             initial={reduce ? false : { y: 140 }}
             animate={{ y: 0 }}
             transition={{ type: "spring", stiffness: 70, damping: 14, delay: 0.15 * i }}

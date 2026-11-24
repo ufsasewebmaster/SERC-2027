@@ -10,22 +10,12 @@ type Step = "form" | "sending" | "pay";
 
 /**
  * The raffle ticket that hangs from the top-right corner on every page.
- * It drops in on first load, tucks up while scrolling, and opens the registration pop-up.
+ * It drops in on first load, stays visible while scrolling, and opens the registration pop-up.
  */
 export default function RegistrationTicket() {
   const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
-  const [tucked, setTucked] = useState(false);
-  const [peek, setPeek] = useState(false);
-  const [dropped, setDropped] = useState(false);
   const ticketRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => setTucked(window.scrollY > 140);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const onOpen = () => setOpen(true);
@@ -41,24 +31,19 @@ export default function RegistrationTicket() {
     );
   }, []);
 
-  const lowered = !tucked || peek;
-
   return (
     <>
       <div className="pointer-events-none fixed top-0 right-3 z-40 sm:right-8">
         <motion.div
           className="pointer-events-auto"
           initial={reduceMotion ? false : { y: -220 }}
-          animate={{ y: lowered ? 0 : -44 }}
+          animate={{ y: 0 }}
           transition={{
             type: "spring",
             stiffness: 140,
             damping: 13,
-            delay: reduceMotion || dropped ? 0 : 0.35,
+            delay: reduceMotion ? 0 : 0.35,
           }}
-          onAnimationComplete={() => setDropped(true)}
-          onHoverStart={() => setPeek(true)}
-          onHoverEnd={() => setPeek(false)}
         >
           <motion.div
             style={{ transformOrigin: "50% 0%" }}
@@ -86,8 +71,6 @@ export default function RegistrationTicket() {
               ref={ticketRef}
               type="button"
               onClick={() => setOpen(true)}
-              onFocus={() => setPeek(true)}
-              onBlur={() => setPeek(false)}
               aria-haspopup="dialog"
               aria-expanded={open}
               className="group relative -mt-1 block w-[104px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-62.5"

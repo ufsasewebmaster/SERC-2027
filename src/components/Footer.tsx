@@ -13,10 +13,10 @@ export default function Footer() {
             <Image src="/images/logo.png" alt="" width={64} height={62} />
             <div>
               <p className="font-display text-xl font-extrabold">{event.name}</p>
-              <p className="text-cream">{event.theme}</p>
+              <p className="text-cream text-lg">{event.theme}</p>
             </div>
           </div>
-          <p className="mt-4 max-w-sm text-cream">
+          <p className="text-base mt-4 max-w-sm text-cream">
             The {event.fullName}, hosted by the {event.host}.
           </p>
           <ul className="mt-5 flex gap-3">
