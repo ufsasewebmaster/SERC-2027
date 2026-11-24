@@ -34,10 +34,14 @@ export default function SymposiumPage() {
 
   return (
     <>
-      <PageHeader eyebrow="Research Symposium" title="Showcase your research" color="bg-sky">
+      <PageHeader
+        eyebrow="Research Symposium"
+        title="Showcase your research"
+        color="bg-sky"
+      >
         <p>
-          Share your work with students, researchers, and industry professionals at the SERC Research Symposium! Present
-          your research, exchange ideas, and explore innovative projects from across the Southeast.
+          Present a research poster to students, researchers, and industry
+          professionals from across the Southeast.
         </p>
       </PageHeader>
 
@@ -51,16 +55,30 @@ export default function SymposiumPage() {
             className={`group flex flex-col items-center ${hasLink ? "" : "cursor-not-allowed"}`}
           >
             <span className="relative grid size-52 place-items-center rounded-full border-[3px] border-ink bg-star shadow-[6px_6px_0_var(--color-ink)] transition-transform group-hover:-translate-y-1 group-hover:rotate-3 sm:size-64">
-              <Image src={symposium.mascotImage} alt="" width={260} height={253} className="h-auto w-[78%] animate-float" />
+              <Image
+                src={symposium.mascotImage}
+                alt=""
+                width={260}
+                height={253}
+                className="h-auto w-[78%] animate-float"
+              />
             </span>
-            <span className="btn mt-6 bg-rust text-xl text-paper">Apply to present</span>
+            <span className="btn mt-6 bg-rust text-xl text-paper">
+              Apply to present
+            </span>
           </a>
-          {!hasLink && <p className="mt-4 text-center text-ink/80">The application form opens soon. Check back here!</p>}
+          {!hasLink && (
+            <p className="mt-4 text-center text-ink/80">
+              Applications open soon!
+            </p>
+          )}
 
           <ul className="mt-16 grid w-full gap-6 md:grid-cols-3">
             {highlights.map((h) => (
               <li key={h.title} className={`sticker p-6 ${h.color}`}>
-                <h2 className="font-display text-2xl font-extrabold">{h.title}</h2>
+                <h2 className="font-display text-2xl font-extrabold">
+                  {h.title}
+                </h2>
                 <p className="mt-2 text-lg">{h.body}</p>
               </li>
             ))}
@@ -68,12 +86,27 @@ export default function SymposiumPage() {
 
           <div className="mt-16 grid w-full gap-6 sm:grid-cols-2">
             {[
-              { src: "/images/past-poster.jpg", alt: "A student presenting a research poster at a past symposium" },
-              { src: "/images/past-poster-2.jpg", alt: "Attendees discussing a research poster at a past symposium" },
+              {
+                src: "/images/past-research.jpg",
+                alt: "A student presenting a research poster at a past symposium",
+              },
+              {
+                src: "/images/past-poster-2.jpg",
+                alt: "Attendees discussing a research poster at a past symposium",
+              },
             ].map((p, i) => (
-              <div key={p.src} className={`sticker bg-paper p-2 ${i ? "rotate-1" : "-rotate-1"}`}>
+              <div
+                key={p.src}
+                className={`sticker bg-paper p-2 ${i ? "rotate-1" : "-rotate-1"}`}
+              >
                 <div className="relative aspect-[3/2] overflow-hidden rounded-lg">
-                  <Image src={p.src} alt={p.alt} fill sizes="(min-width: 640px) 45vw, 90vw" className="object-cover" />
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    fill
+                    sizes="(min-width: 640px) 45vw, 90vw"
+                    className="object-cover"
+                  />
                 </div>
               </div>
             ))}

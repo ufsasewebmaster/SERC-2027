@@ -42,17 +42,19 @@ export default function Accordion({
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggle(i)}
-                className="flex w-full items-center gap-4 px-5 py-4 text-left sm:px-6"
+                className="group flex w-full cursor-pointer items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-ink/5 focus-visible:bg-ink/5 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-ink sm:px-6"
               >
                 {item.icon}
                 <span className="flex-1 font-heading text-lg font-semibold sm:text-xl">{item.title}</span>
                 <span
                   aria-hidden="true"
-                  className={`grid size-9 shrink-0 place-items-center rounded-full border-[3px] border-ink bg-paper text-xl font-bold transition-transform duration-300 ${
+                  className={`grid size-9 shrink-0 place-items-center rounded-full border-[3px] border-ink bg-paper transition-[transform,background-color] duration-300 group-hover:bg-star group-focus-visible:bg-star ${
                     isOpen ? "rotate-45" : ""
                   }`}
                 >
-                  +
+                  <svg viewBox="0 0 24 24" className="block size-5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
                 </span>
               </button>
             </h3>

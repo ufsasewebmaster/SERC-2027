@@ -12,11 +12,11 @@ npm run build    # production build (all pages are static)
 
 ## Editing content
 
-**Almost everything lives in [`src/content/site.ts`](src/content/site.ts).** Search it for `TODO` to find placeholders:
+**Almost everything lives in [`src/content/site.ts`](src/content/site.ts).** Team members live in [`src/content/team.ts`](src/content/team.ts). Search for `TODO` to find placeholders:
 
 | What | Where in `site.ts` |
 | --- | --- |
-| Planning team (name, position, photo) | `team` — photos go in `public/images/team/` |
+| Planning team (name, position, major, photo, LinkedIn) | `src/content/team.ts` — photos go in `public/images/team/` |
 | FAQs | `faqs` |
 | Partner logos | `partners` — logos go in `public/images/partners/` |
 | Registration Google Form | `registration.googleForm` (instructions in the comment above it) |
@@ -28,7 +28,7 @@ npm run build    # production build (all pages are static)
 ## Pages
 
 - `/` — scrolling homepage: hero, About, What's in the box?, team blind boxes, countdown, FAQs
-- `/schedule` — "coming soon" sealed box
+- `/schedule` — conference timeline; edit times and activities in `src/content/schedule.ts`
 - `/partners` — partner logo grid
 - `/symposium` — research symposium + apply button
 

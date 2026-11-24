@@ -13,10 +13,10 @@ export default function Footer() {
             <Image src="/images/logo.png" alt="" width={64} height={62} />
             <div>
               <p className="font-display text-xl font-extrabold">{event.name}</p>
-              <p className="text-cream">{event.theme}</p>
+              <p className="text-cream text-lg">{event.theme}</p>
             </div>
           </div>
-          <p className="mt-4 max-w-sm text-cream">
+          <p className="text-base mt-4 max-w-sm text-cream">
             The {event.fullName}, hosted by the {event.host}.
           </p>
           <ul className="mt-5 flex gap-3">
@@ -39,9 +39,9 @@ export default function Footer() {
         <FooterList title="Explore" links={sectionLinks} />
         <FooterList title="Pages" links={pageLinks} extra={{ href: `mailto:${event.contactEmail}`, label: "Contact us" }} />
       </div>
-      <div className="border-t-2 border-paper/20 px-4 py-5 text-center font-heading text-sm tracking-[0.18em] text-paper">
+      {/* <div className="border-t-2 border-paper/20 px-4 py-5 text-center font-heading text-sm tracking-[0.18em] text-paper">
         SERC 2027 | UNIVERSITY OF FLORIDA | JANUARY 17TH, 2027
-      </div>
+      </div> */}
     </footer>
   );
 }

@@ -45,9 +45,9 @@ export default function Countdown() {
 
       <div className="relative mx-auto max-w-5xl px-4 text-center sm:px-6">
         <h2 className="section-title">Countdown to unboxing</h2>
-        <p className="mt-3 text-lg text-paper sm:text-xl">
+        {/* <p className="mt-3 text-lg text-paper sm:text-xl">
           {event.dateLabel} · {event.venue}
-        </p>
+        </p> */}
 
         {state?.done ? (
           <p className="mx-auto mt-10 inline-block sticker bg-star px-8 py-6 font-display text-3xl font-extrabold text-ink">

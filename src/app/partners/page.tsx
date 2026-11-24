@@ -15,11 +15,9 @@ export const metadata: Metadata = pageMetadata({
 export default function PartnersPage() {
   return (
     <>
-      <PageHeader eyebrow="Partners" title="The people making it possible" color="bg-blush">
+      <PageHeader eyebrow="Partners" title="Industry partners" color="bg-blush">
         <p>
-          SERC 2027 wouldn&apos;t be possible without the support of our industry partners! Through workshops, networking
-          opportunities, and recruiting events, our partners help students explore career paths, build professional
-          connections, and gain valuable industry experience.
+          Our partners lead workshops and meet students through recruiting and networking events at SERC.
         </p>
       </PageHeader>
 
@@ -49,7 +47,6 @@ export default function PartnersPage() {
             </ul>
           ) : (
             <>
-              <p className="mt-3 text-center text-lg">Our partner lineup is being unboxed. Check back soon!</p>
               <ul className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4" aria-hidden="true">
                 {Array.from({ length: 8 }, (_, i) => (
                   <li
@@ -65,7 +62,7 @@ export default function PartnersPage() {
 
           <div className="sticker mx-auto mt-16 max-w-2xl bg-sky p-6 text-center sm:p-8">
             <h2 className="font-display text-2xl font-extrabold">Interested in partnering?</h2>
-            <p className="mt-2 text-lg">We&apos;d love to have your company at SERC 2027.</p>
+            <p className="mt-2 text-lg">We&apos;d love to have you at SERC 2027.</p>
             <a href={`mailto:${event.contactEmail}?subject=SERC%202027%20Partnership`} className="btn mt-5 bg-paper">
               Email {event.contactEmail}
             </a>

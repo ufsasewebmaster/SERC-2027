@@ -10,22 +10,12 @@ type Step = "form" | "sending" | "pay";
 
 /**
  * The raffle ticket that hangs from the top-right corner on every page.
- * It drops in on first load, tucks up while scrolling, and opens the registration pop-up.
+ * It drops in on first load, stays visible while scrolling, and opens the registration pop-up.
  */
 export default function RegistrationTicket() {
   const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
-  const [tucked, setTucked] = useState(false);
-  const [peek, setPeek] = useState(false);
-  const [dropped, setDropped] = useState(false);
   const ticketRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const onScroll = () => setTucked(window.scrollY > 140);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     const onOpen = () => setOpen(true);
@@ -36,10 +26,10 @@ export default function RegistrationTicket() {
   const close = useCallback(() => {
     setOpen(false);
     // Hand focus back to the ticket so keyboard users don't lose their place.
-    requestAnimationFrame(() => ticketRef.current?.focus({ preventScroll: true }));
+    requestAnimationFrame(() =>
+      ticketRef.current?.focus({ preventScroll: true }),
+    );
   }, []);
-
-  const lowered = !tucked || peek;
 
   return (
     <>
@@ -47,43 +37,59 @@ export default function RegistrationTicket() {
         <motion.div
           className="pointer-events-auto"
           initial={reduceMotion ? false : { y: -220 }}
-          animate={{ y: lowered ? 0 : -44 }}
-          transition={{ type: "spring", stiffness: 140, damping: 13, delay: reduceMotion || dropped ? 0 : 0.35 }}
-          onAnimationComplete={() => setDropped(true)}
-          onHoverStart={() => setPeek(true)}
-          onHoverEnd={() => setPeek(false)}
+          animate={{ y: 0 }}
+          transition={{
+            type: "spring",
+            stiffness: 140,
+            damping: 13,
+            delay: reduceMotion ? 0 : 0.35,
+          }}
         >
           <motion.div
             style={{ transformOrigin: "50% 0%" }}
             initial={reduceMotion ? false : { rotate: 0 }}
-            animate={reduceMotion ? undefined : { rotate: [0, -14, 10, -6, 3, -1, 0] }}
+            animate={
+              reduceMotion ? undefined : { rotate: [0, -14, 10, -6, 3, -1, 0] }
+            }
             transition={{ duration: 2.2, delay: 0.6, ease: "easeOut" }}
-            whileHover={reduceMotion ? undefined : { rotate: [0, -4, 3, 0], transition: { duration: 0.6 } }}
+            whileHover={
+              reduceMotion
+                ? undefined
+                : { rotate: [0, -4, 3, 0], transition: { duration: 0.6 } }
+            }
           >
             {/* the string */}
-            <div className="mx-auto h-[86px] w-[3px] rounded-full bg-ink sm:h-[92px]" aria-hidden="true" />
-            <div className="mx-auto -mt-1 size-3 rounded-full border-[3px] border-ink bg-paper" aria-hidden="true" />
+            <div
+              className="mx-auto h-[86px] w-[3px] rounded-full bg-ink sm:h-[92px]"
+              aria-hidden="true"
+            />
+            <div
+              className="mx-auto -mt-1 size-3 rounded-full border-[3px] border-ink bg-paper"
+              aria-hidden="true"
+            />
             <button
               ref={ticketRef}
               type="button"
               onClick={() => setOpen(true)}
-              onFocus={() => setPeek(true)}
-              onBlur={() => setPeek(false)}
               aria-haspopup="dialog"
               aria-expanded={open}
-              className="group relative -mt-1 block w-[104px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-[150px]"
+              className="group relative -mt-1 block w-[104px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-62.5"
             >
               <TicketShape className="block w-full" />
               <span className="absolute inset-0 flex items-center">
                 <span className="flex w-[30%] items-center justify-center self-stretch">
-                  <span className="font-heading text-[0.5rem] font-bold tracking-[0.2em] [writing-mode:vertical-rl] rotate-180 sm:text-[0.62rem]">
+                  <span className="font-heading text-[0.5rem] font-bold tracking-[0.2em] [writing-mode:vertical-rl] rotate-180 sm:text-[0.85rem]">
                     ADMIT ONE
                   </span>
                 </span>
                 <span className="flex flex-1 flex-col items-center leading-none">
-                  <span className="font-heading text-[0.5rem] font-semibold tracking-[0.18em] sm:text-[0.62rem]">SERC 2027</span>
-                  <span className="mt-1 font-display text-[0.62rem] font-extrabold sm:text-[0.84rem]">REGISTER</span>
-                  <span className="mt-1 rounded-full bg-ink px-1.5 py-0.5 text-[0.55rem] font-semibold text-paper sm:text-xs">
+                  <span className="font-heading text-[0.5rem] font-semibold tracking-[0.18em] sm:text-[0.9rem]">
+                    SERC 2027
+                  </span>
+                  <span className="mt-1 font-display text-[0.62rem] font-extrabold sm:text-[1.2rem]">
+                    REGISTER
+                  </span>
+                  <span className="mt-1 rounded-full bg-ink px-1.5 py-0.5 text-[0.55rem] font-semibold text-paper sm:text-2xl">
                     {registration.price}
                   </span>
                 </span>
@@ -93,7 +99,11 @@ export default function RegistrationTicket() {
         </motion.div>
       </div>
 
-      <AnimatePresence>{open && <RegistrationDialog onClose={close} reduceMotion={!!reduceMotion} />}</AnimatePresence>
+      <AnimatePresence>
+        {open && (
+          <RegistrationDialog onClose={close} reduceMotion={!!reduceMotion} />
+        )}
+      </AnimatePresence>
     </>
   );
 }
@@ -107,13 +117,35 @@ function TicketShape({ className }: { className?: string }) {
         stroke="var(--color-ink)"
         strokeWidth="3"
       />
-      <path d="M48 8V88" stroke="var(--color-ink)" strokeWidth="2.5" strokeDasharray="5 5" strokeLinecap="round" />
-      <rect x="54" y="8" width="98" height="80" rx="5" fill="none" stroke="var(--color-ink)" strokeOpacity=".25" strokeWidth="1.5" />
+      <path
+        d="M48 8V88"
+        stroke="var(--color-ink)"
+        strokeWidth="2.5"
+        strokeDasharray="5 5"
+        strokeLinecap="round"
+      />
+      <rect
+        x="54"
+        y="8"
+        width="98"
+        height="80"
+        rx="5"
+        fill="none"
+        stroke="var(--color-ink)"
+        strokeOpacity=".25"
+        strokeWidth="1.5"
+      />
     </svg>
   );
 }
 
-function RegistrationDialog({ onClose, reduceMotion }: { onClose: () => void; reduceMotion: boolean }) {
+function RegistrationDialog({
+  onClose,
+  reduceMotion,
+}: {
+  onClose: () => void;
+  reduceMotion: boolean;
+}) {
   const [step, setStep] = useState<Step>("form");
   const [error, setError] = useState("");
   const panelRef = useRef<HTMLDivElement>(null);
@@ -174,7 +206,9 @@ function RegistrationDialog({ onClose, reduceMotion }: { onClose: () => void; re
       setStep("pay");
     } catch {
       setStep("form");
-      setError("We couldn't save your info — check your connection and try again.");
+      setError(
+        "We couldn't save your info — check your connection and try again.",
+      );
     }
   }
 
@@ -195,20 +229,37 @@ function RegistrationDialog({ onClose, reduceMotion }: { onClose: () => void; re
         aria-labelledby={titleId}
         className="sticker relative flex max-h-[92dvh] w-full max-w-3xl flex-col overflow-hidden bg-paper sm:flex-row"
         style={{ transformOrigin: "top right" }}
-        initial={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.35, x: 220, y: -260, rotate: 8 }}
+        initial={
+          reduceMotion
+            ? { opacity: 0 }
+            : { opacity: 0, scale: 0.35, x: 220, y: -260, rotate: 8 }
+        }
         animate={{ opacity: 1, scale: 1, x: 0, y: 0, rotate: 0 }}
-        exit={reduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.35, x: 220, y: -260, rotate: 8 }}
+        exit={
+          reduceMotion
+            ? { opacity: 0 }
+            : { opacity: 0, scale: 0.35, x: 220, y: -260, rotate: 8 }
+        }
         transition={{ type: "spring", stiffness: 220, damping: 24 }}
       >
         {/* ticket stub */}
         <div className="relative flex shrink-0 items-center gap-4 border-b-[3px] border-dashed border-ink bg-star px-5 py-4 sm:w-52 sm:flex-col sm:justify-center sm:border-r-[3px] sm:border-b-0 sm:px-4 sm:py-8">
-          <Image src="/images/logo.png" alt="" width={140} height={136} className="h-auto w-14 sm:w-32" />
+          <Image
+            src="/images/logo.png"
+            alt=""
+            width={140}
+            height={136}
+            className="h-auto w-14 sm:w-32"
+          />
           <div className="sm:text-center">
-            <p className="font-heading text-xs font-bold tracking-[0.25em]">ADMIT ONE</p>
-            <p className="font-display text-lg font-extrabold leading-tight">{event.name}</p>
-            <p className="text-sm">
-              {event.shortDate} · {event.venue}
+            <p className="font-heading text-s font-bold tracking-[0.25em]">
+              ADMIT ONE
             </p>
+            <p className="font-display text-xl font-extrabold leading-tight">
+              {event.name}
+            </p>
+            <p className="text-xl">{event.shortDate}</p>
+            <p className="text-l">{event.venue}</p>
           </div>
         </div>
 
@@ -224,36 +275,68 @@ function RegistrationDialog({ onClose, reduceMotion }: { onClose: () => void; re
 
           {step !== "pay" ? (
             <>
-              <h2 id={titleId} className="pr-12 font-display text-2xl font-extrabold sm:text-3xl">
-                Grab your ticket!
+              <h2
+                id={titleId}
+                className="pr-12 font-display text-2xl font-extrabold sm:text-3xl"
+              >
+                Register for SERC!
               </h2>
               <PriceLine />
               <form onSubmit={handleSubmit} className="mt-5 space-y-4">
-                <Field label="Full name" name="name" autoComplete="name" autoFocus />
-                <Field label="School" name="school" autoComplete="organization" />
-                <Field label="Email" name="email" type="email" autoComplete="email" />
+                <Field
+                  label="Full name"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus
+                />
+                <Field
+                  label="School"
+                  name="school"
+                  autoComplete="organization"
+                />
+                <Field
+                  label="Email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                />
                 {error && (
-                  <p role="alert" className="rounded-xl bg-blush px-3 py-2 text-sm font-medium">
+                  <p
+                    role="alert"
+                    className="rounded-xl bg-blush px-3 py-2 text-sm font-medium"
+                  >
                     {error}
                   </p>
                 )}
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-1">
-                  <button type="submit" disabled={step === "sending"} className="btn bg-sage text-lg disabled:opacity-60">
+                  <button
+                    type="submit"
+                    disabled={step === "sending"}
+                    className="btn bg-sage text-lg disabled:opacity-60"
+                  >
                     {step === "sending" ? "Saving…" : "Save my spot →"}
                   </button>
-                  <button type="button" onClick={() => setStep("pay")} className="text-sm underline underline-offset-4">
-                    Already filled this out? Go to payment
+                  <button
+                    type="button"
+                    onClick={() => setStep("pay")}
+                    className="text-sm"
+                  >
+                    Already filled this out?{" "}
+                    <span className="underline underline-offset-4">Go to payment</span>
                   </button>
                 </div>
               </form>
             </>
           ) : (
             <>
-              <h2 id={titleId} className="pr-12 font-display text-2xl font-extrabold sm:text-3xl">
-                Almost unboxed!
+              <h2
+                id={titleId}
+                className="pr-12 font-display text-2xl font-extrabold sm:text-3xl"
+              >
+                Choose your registration
               </h2>
               <p className="mt-2 text-lg">
-                Your spot is saved. Finish registering by choosing how you&apos;re signing up:
+                Choose individual or chapter registration to complete payment.
               </p>
               <ul className="mt-5 grid gap-3 sm:grid-cols-2">
                 {registration.paymentLinks.map((p) => (
@@ -264,14 +347,20 @@ function RegistrationDialog({ onClose, reduceMotion }: { onClose: () => void; re
                       rel="noopener noreferrer"
                       className="sticker flex h-full flex-col bg-sky px-4 py-4 transition-transform hover:-translate-y-1"
                     >
-                      <span className="font-display text-lg font-extrabold">{p.label}&nbsp;↗</span>
+                      <span className="font-display text-lg font-extrabold">
+                        {p.label}&nbsp;↗
+                      </span>
                       <span className="text-sm">{p.description}</span>
                     </a>
                   </li>
                 ))}
               </ul>
               <PriceLine />
-              <button type="button" onClick={() => setStep("form")} className="mt-4 text-sm underline underline-offset-4">
+              <button
+                type="button"
+                onClick={() => setStep("form")}
+                className="mt-4 text-sm underline underline-offset-4"
+              >
                 ← Edit my info
               </button>
             </>
@@ -285,10 +374,13 @@ function RegistrationDialog({ onClose, reduceMotion }: { onClose: () => void; re
 function PriceLine() {
   return (
     <p className="mt-3 flex flex-wrap items-baseline gap-x-2">
-      <span className="font-display text-3xl font-extrabold text-rust">{registration.price}</span>
-      <span>per person</span>
-      <span className="text-ink/75">
-        · {registration.latePrice} after {registration.lateDeadline || "the early deadline"}
+      <span className="font-display text-3xl font-extrabold text-rust">
+        {registration.price}
+      </span>
+      <span className="text-2xl">per person</span>
+      <span className="text-1xl">
+        ({registration.latePrice} after{" "}
+        {registration.lateDeadline || "the early deadline"})
       </span>
     </p>
   );

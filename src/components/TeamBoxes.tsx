@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { useRef, useState } from "react";
-import { team, type TeamMember } from "@/content/site";
+import { team, type TeamMember } from "@/content/team";
 import BlindBox from "./BlindBox";
 
 const palette = ["var(--color-sky)", "var(--color-blush)", "var(--color-sage)", "var(--color-star)", "var(--color-peach)"];
@@ -89,47 +89,63 @@ function TeamBox({
   const open = phase === "open";
 
   return (
-    <button
-      type="button"
-      onClick={onToggle}
-      aria-pressed={open}
-      aria-label={open ? `${member.name}, ${member.position}. Close box` : `Mystery box ${index + 1}. Open to meet a team member`}
-      className="group block w-full [perspective:1000px]"
-    >
+    <div className="group block w-full [perspective:1000px]">
       <motion.div
-        className="relative aspect-[3/4] w-full [transform-style:preserve-3d]"
+        className="relative aspect-[3/4] min-h-[20rem] w-full [transform-style:preserve-3d]"
         animate={{ rotateY: open ? 180 : 0 }}
         transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 120, damping: 15 }}
       >
         {/* front: the closed blind box */}
-        <div
-          className={`absolute inset-0 flex items-end justify-center [backface-visibility:hidden] ${
+        <button
+          type="button"
+          onClick={onToggle}
+          tabIndex={open ? -1 : 0}
+          aria-hidden={open}
+          aria-label={`Mystery box ${index + 1}. Open to meet a team member`}
+          className={`absolute inset-0 flex w-full items-end justify-center [backface-visibility:hidden] ${
             phase === "shaking" ? "animate-wiggle" : "transition-transform group-hover:-translate-y-1 group-hover:-rotate-2"
           }`}
         >
           <BlindBox color={color} label={number} lid={phase === "shaking" ? "pop" : open ? "off" : "closed"} className="w-full" />
-        </div>
+        </button>
 
         {/* back: the character card */}
         <div
+          aria-hidden={!open}
           className="sticker absolute inset-0 flex flex-col items-center overflow-hidden bg-paper px-3 pt-4 pb-3 text-center [backface-visibility:hidden] [transform:rotateY(180deg)]"
           style={{ backgroundImage: `linear-gradient(180deg, ${color} 0 42%, transparent 42%)` }}
         >
-          <span className="self-start rounded-full bg-ink px-2 py-0.5 font-heading text-[0.65rem] font-bold tracking-wider text-paper">
+          <button
+            type="button"
+            onClick={onToggle}
+            tabIndex={open ? 0 : -1}
+            aria-label={`Close ${member.name}'s box`}
+            className="absolute inset-0 rounded-[inherit]"
+          />
+          <span className="pointer-events-none self-start rounded-full bg-ink px-2 py-0.5 font-heading text-[0.65rem] font-bold tracking-wider text-paper">
             {number}
           </span>
-          <div className="relative mt-1 aspect-square w-[62%] overflow-hidden rounded-full border-[3px] border-ink bg-cream">
+          <div className="pointer-events-none relative mt-1 aspect-square w-[52%] shrink-0 overflow-hidden rounded-full border-[3px] border-ink bg-cream">
             {member.photo ? (
               <Image src={member.photo} alt="" fill sizes="(min-width: 1024px) 15vw, 30vw" className="object-cover" />
             ) : (
               <Silhouette />
             )}
           </div>
-          <p className="mt-auto font-display text-[clamp(0.8rem,2.6vw,1.05rem)] leading-tight font-extrabold">{member.name}</p>
-          <p className="mt-1 text-[clamp(0.75rem,2.2vw,0.95rem)] leading-tight">{member.position}</p>
+          <p className="relative mt-4 font-display text-[clamp(0.8rem,2.6vw,1.05rem)] leading-tight font-extrabold">
+            {member.linkedin ? (
+              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1} className="underline underline-offset-4 hover:text-rust" aria-label={`${member.name} on LinkedIn`}>
+                {member.name}
+              </a>
+            ) : (
+              <span className="pointer-events-none">{member.name}</span>
+            )}
+          </p>
+          <p className="pointer-events-none mt-1 text-[clamp(0.7rem,2vw,0.85rem)] leading-tight text-ink/80">{member.major}</p>
+          <p className="pointer-events-none mt-2 text-[clamp(0.75rem,2.2vw,0.95rem)] leading-tight">{member.position}</p>
         </div>
       </motion.div>
-    </button>
+    </div>
   );
 }
 
