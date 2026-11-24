@@ -1,6 +1,6 @@
 /**
  * ─────────────────────────────────────────────────────────────
- *  SERC 2027 — ALL editable website content lives in this file.
+ *  SERC 2027 — General website content. Team members live in team.ts.
  * ─────────────────────────────────────────────────────────────
  *  Anything marked TODO is a placeholder waiting on real content.
  *  Images go in /public/images and are referenced as "/images/<file>".
@@ -123,17 +123,6 @@ export const whatsInTheBox: BoxItem[] = [
     body: "Get creative and make your own tote bags and phone charms! Enjoy free stickers, shirts, and professional headshots, plus exciting raffles and chances to win prizes and awards throughout the conference!",
   },
 ];
-
-export type TeamMember = { name: string; position: string; photo?: string };
-
-/**
- * TODO: replace with the real planning team (photo optional — put files in /public/images/team/).
- * Example: { name: "Alex Chen", position: "Conference Chair", photo: "/images/team/alex.jpg" }
- */
-export const team: TeamMember[] = Array.from({ length: 16 }, (_, i) => ({
-  name: `Team Member ${i + 1}`,
-  position: "Committee Position",
-}));
 
 export type Faq = { q: string; a: string; link?: { label: string; href: string } };
 
