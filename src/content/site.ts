@@ -16,8 +16,7 @@ export const event = {
   venue: "University of Florida",
   // Countdown target (Eastern Time). Change the time once the schedule is final.
   startsAt: "2027-01-17T08:00:00-05:00",
-  // TODO: confirm the best contact address for SERC 2027.
-  contactEmail: "serc@saseconnect.org",
+  contactEmail: "ufsase.conference@gmail.com",
   partnershipEmail: "ufsase.conference@gmail.com",
 };
 
