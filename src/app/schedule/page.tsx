@@ -36,16 +36,16 @@ function TimeRange({ start, end }: { start: string; end: string }) {
   );
 }
 
-function ActivityTitle({ activity }: { activity: ScheduleActivity }) {
-  if (!activity.lines) return <>{activity.title}</>;
+function ActivityTitle({ activity, level, className }: { activity: ScheduleActivity; level: 2 | 3; className: string }) {
+  const Heading = level === 2 ? "h2" : "h3";
+  if (!activity.lines?.length) return <Heading className={className}>{activity.title}</Heading>;
   return (
-    <>
-      {activity.lines.map((line) => (
-        <span key={line} className="block">
-          {line}
-        </span>
-      ))}
-    </>
+    <div className={className}>
+      <Heading className="sr-only">{activity.title}</Heading>
+      <ul className="list-disc space-y-1 pl-5">
+        {activity.lines.map((line) => <li key={line}>{line}</li>)}
+      </ul>
+    </div>
   );
 }
 
@@ -118,7 +118,7 @@ export default function SchedulePage() {
                               <p className="font-heading text-lg font-semibold tabular-nums sm:text-xl">
                                 <TimeRange start={activity.start} end={activity.end} />
                               </p>
-                              <h3 className="mt-1 font-heading text-lg font-bold"><ActivityTitle activity={activity} /></h3>
+                              <ActivityTitle activity={activity} level={3} className="mt-1 font-heading text-lg font-bold" />
                             </li>
                           ))}
                         </ul>
@@ -128,7 +128,7 @@ export default function SchedulePage() {
                         <p className="mb-2 font-heading text-lg leading-7 font-semibold tabular-nums sm:text-xl sm:hidden">
                           <TimeRange start={first.start} end={first.end} />
                         </p>
-                        <h2 className="font-heading text-xl leading-8 font-bold sm:text-2xl"><ActivityTitle activity={first} /></h2>
+                        <ActivityTitle activity={first} level={2} className="font-heading text-xl leading-8 font-bold sm:text-2xl" />
                       </div>
                     )}
                   </li>
