@@ -14,7 +14,7 @@ export default function Partners() {
         <PartnerGrid />
         <div className="mt-8 text-center">
           <Link href="/partners" className="btn bg-paper text-lg">
-            View All Partners <span aria-hidden="true">→</span>
+            View All Partners
           </Link>
         </div>
       </div>
