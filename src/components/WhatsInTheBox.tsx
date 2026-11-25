@@ -33,6 +33,14 @@ export default function WhatsInTheBox() {
             }))}
           />
         </div>
+        <nav aria-label="Explore the conference" className="mt-8 flex flex-wrap justify-center gap-4">
+          <Link href="/schedule" className="btn bg-paper text-base sm:text-lg">
+            View the Schedule <span aria-hidden="true">→</span>
+          </Link>
+          <Link href="/partners" className="btn bg-cream text-base sm:text-lg">
+            Meet Our Partners <span aria-hidden="true">→</span>
+          </Link>
+        </nav>
         <div className="mt-12 text-center">
           <p className="font-display text-2xl font-extrabold text-paper sm:text-3xl">Ready to Unbox?</p>
           <div className="mt-5">

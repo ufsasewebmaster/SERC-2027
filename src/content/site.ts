@@ -30,8 +30,8 @@ export const socials = [
 export const registration = {
   price: "$35",
   latePrice: "$45",
-  // TODO: the date the price goes up, e.g. "December 20".
-  lateDeadline: "",
+  // Early-bird pricing is available through this date (2026).
+  lateDeadline: "December 17",
   // Published Google Form responder URL (/viewform or forms.gle).
   // The form collects attendee details, explains payment, and accepts receipt uploads.
   // Leave empty until ready; the ticket shows a disabled button instead of an old link.
@@ -111,7 +111,7 @@ export type Faq = { q: string; a: string; link?: { label: string; href: string }
 export const faqs: Faq[] = [
   {
     q: "How much does it cost to attend?",
-    a: "Registration is $35 per person. The price goes up to $45 after the early registration deadline, so grab your ticket early!",
+    a: `Registration is ${registration.price} per person. The price goes up to ${registration.latePrice} after the early registration deadline on ${registration.lateDeadline}, so grab your ticket early!`,
   },
   {
     q: "Who can attend SERC?",
