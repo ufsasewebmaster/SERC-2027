@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "Schedule",
   description:
-    "Plan your day at SASE SERC 2027 on January 17, 2027 at the Reitz Union, University of Florida. Registration starts at 8 AM; the career fair ends at 8 PM.",
+    "Plan your day at SASE SERC 2027 on January 17, 2027 at the Reitz Union, University of Florida. Registration starts at 8 AM; the career fair ends at 7 PM.",
   path: "/schedule",
 });
 
@@ -32,6 +32,19 @@ function TimeRange({ start, end }: { start: string; end: string }) {
       <time dateTime={`2027-01-17T${start}:00-05:00`}>{formatTime(start)}</time>
       <span aria-hidden="true"> – </span><span className="sr-only"> to </span>
       <time dateTime={`2027-01-17T${end}:00-05:00`}>{formatTime(end)}</time>
+    </>
+  );
+}
+
+function ActivityTitle({ activity }: { activity: ScheduleActivity }) {
+  if (!activity.lines) return <>{activity.title}</>;
+  return (
+    <>
+      {activity.lines.map((line) => (
+        <span key={line} className="block">
+          {line}
+        </span>
+      ))}
     </>
   );
 }
@@ -105,7 +118,7 @@ export default function SchedulePage() {
                               <p className="font-heading text-sm font-semibold tabular-nums">
                                 <TimeRange start={activity.start} end={activity.end} />
                               </p>
-                              <h3 className="mt-1 font-heading text-lg font-bold">{activity.title}</h3>
+                              <h3 className="mt-1 font-heading text-lg font-bold"><ActivityTitle activity={activity} /></h3>
                             </li>
                           ))}
                         </ul>
@@ -115,7 +128,7 @@ export default function SchedulePage() {
                         <p className="mb-2 font-heading text-sm leading-5 font-semibold tabular-nums sm:hidden">
                           <TimeRange start={first.start} end={first.end} />
                         </p>
-                        <h2 className="font-heading text-xl leading-8 font-bold sm:text-2xl">{first.title}</h2>
+                        <h2 className="font-heading text-xl leading-8 font-bold sm:text-2xl"><ActivityTitle activity={first} /></h2>
                       </div>
                     )}
                   </li>

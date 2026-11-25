@@ -1,5 +1,7 @@
 export type ScheduleActivity = {
   title: string;
+  /** Shown instead of the title, one per line, when several things share a slot. */
+  lines?: string[];
   start: string;
   end: string;
   category:
@@ -48,7 +50,8 @@ export const schedule: ScheduleBlock[] = [
   {
     activities: [
       {
-        title: "Activity Block 1",
+        title: "Chapter Networking & Resume Reviews",
+        lines: ["Chapter Networking", "Resume Reviews"],
         start: "10:50",
         end: "11:50",
         category: "activity",
@@ -70,7 +73,8 @@ export const schedule: ScheduleBlock[] = [
     activities: [
       { title: "Lunch", start: "12:50", end: "14:50", category: "meal" },
       {
-        title: "Activity Block 2",
+        title: "Research Symposium & Resume Reviews",
+        lines: ["Research Symposium", "Resume Reviews"],
         start: "13:20",
         end: "14:50",
         category: "activity",
@@ -102,7 +106,7 @@ export const schedule: ScheduleBlock[] = [
       {
         title: "Career Fair",
         start: "17:00",
-        end: "20:00",
+        end: "19:00",
         category: "career",
       },
     ],
