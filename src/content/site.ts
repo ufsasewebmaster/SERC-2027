@@ -135,6 +135,9 @@ export const faqs: Faq[] = [
 export const symposium = {
   // Public research symposium application form.
   applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeUDSvh0uS3bmkOv_EZt97R-XfVrb-JwNJTzIzsdj0Bi5kDpQ/viewform",
+  // Final poster submission form (separate from the sign-up form above).
+  posterUrl: "https://forms.gle/2ERmoeWExkj7cwPc7",
+  posterDeadline: "January 14th, 2027",
   // TODO: swap for the scientist mascot graphic when it's ready.
   mascotImage: "/images/logo.png",
 };
