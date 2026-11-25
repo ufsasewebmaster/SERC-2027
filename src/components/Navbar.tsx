@@ -11,7 +11,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b-[3px] border-ink bg-paper/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b-[3px] border-ink bg-paper">
       {/* Desktop padding leaves room for the ticket; the mobile menu sits at the edge. */}
       <nav aria-label="Main" className="mx-auto flex h-16 max-w-7xl items-center gap-4 pl-4 pr-4 md:pr-48 lg:pl-8">
         <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="SERC 2027 home">

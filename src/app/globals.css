@@ -31,6 +31,7 @@
   --animate-drift: drift 7s ease-in-out infinite;
   --animate-bob: bob 3.2s ease-in-out infinite;
   --animate-marquee: marquee 40s linear infinite;
+  --animate-burst: burst 3.35s ease-in-out infinite;
 
   @keyframes float {
     0%, 100% { transform: translateY(0) rotate(-1deg); }
@@ -55,6 +56,12 @@
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-25%); }
+  }
+  /* a quick pop, then rest; --r keeps any static rotation */
+  @keyframes burst {
+    0%, 16%, 100% { transform: rotate(var(--r, 0deg)) scale(1); }
+    5% { transform: rotate(var(--r, 0deg)) scale(1.18); }
+    11% { transform: rotate(var(--r, 0deg)) scale(0.94); }
   }
   @keyframes twinkle {
     0%, 100% { transform: scale(1) rotate(0); opacity: 1; }

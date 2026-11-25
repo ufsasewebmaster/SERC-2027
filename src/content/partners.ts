@@ -32,4 +32,19 @@ export const partners: Partner[] = [
     href: "https://www.pepsico.com/",
     logoFit: "cover",
   },
+  {
+    name: "Michelin",
+    logo: "/images/partners/michelin.webp",
+    href: "https://www.michelin.com/",
+  },
+  {
+    name: "Mitsubishi Motors",
+    logo: "/images/partners/mitsubishi-motors.webp",
+    href: "https://www.mitsubishicars.com/",
+  },
+  {
+    name: "ExxonMobil",
+    logo: "/images/partners/exxonmobil.webp",
+    href: "https://corporate.exxonmobil.com/",
+  },
 ];
