@@ -22,9 +22,9 @@ export const event = {
 };
 
 export const socials = [
-  { label: "Instagram", handle: "@ufsase", href: "https://www.instagram.com/ufsase/", icon: "instagram" },
+  { label: "Instagram", handle: "@saseserc", href: "https://www.instagram.com/saseserc/", icon: "instagram" },
   { label: "LinkedIn", handle: "UF SASE", href: "https://www.linkedin.com/company/ufsase/", icon: "linkedin" },
-  { label: "Discord", handle: "Join the server", href: "https://discord.com/invite/q3HBeC5", icon: "discord" },
+  { label: "Discord", handle: "Join the server", href: "https://discord.gg/nhd4WB88Vg", icon: "discord" },
 ] as const;
 
 export const registration = {
@@ -45,8 +45,8 @@ export const about = {
     "This year, SERC is coming to the University of Florida on Sunday, January 17, 2027!",
   ],
   stats: [
-    { value: "500+", label: "attendees" },
-    { value: "15+", label: "universities" },
+    { value: "400+", label: "attendees" },
+    { value: "12+", label: "universities" },
     { value: "1", label: "jam-packed day" },
   ],
   pillars: [
@@ -124,14 +124,19 @@ export const faqs: Faq[] = [
   },
   {
     q: "Where can I find the latest updates?",
-    a: "Right here on this website, on Instagram at @ufsase, and in our Discord server.",
+    a: "Right here on this website, on Instagram at @saseserc, and in our Discord server.",
   },
 ];
 
 export type Partner = { name: string; logo: string; href?: string };
 
-/** TODO: add confirmed SERC 2027 partners. Put logos in /public/images/partners/. */
-export const partners: Partner[] = [];
+/** Placeholder lineup for now. Put logos in /public/images/partners/. */
+export const partners: Partner[] = [
+  { name: "NASA", logo: "/images/partners/nasa.webp", href: "https://www.nasa.gov/" },
+  { name: "Mortenson", logo: "/images/partners/mortenson.png", href: "https://www.mortenson.com/" },
+  { name: "Sandia National Laboratories", logo: "/images/partners/sandia.png", href: "https://www.sandia.gov/" },
+  { name: "Mayo Clinic", logo: "/images/partners/mayo-clinic.png", href: "https://www.mayoclinic.org/" },
+];
 
 export const symposium = {
   // TODO: the PUBLIC Google Form link (…/viewform), not the edit link.

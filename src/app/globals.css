@@ -30,6 +30,7 @@
   --animate-twinkle: twinkle 3s ease-in-out infinite;
   --animate-drift: drift 7s ease-in-out infinite;
   --animate-bob: bob 3.2s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
 
   @keyframes float {
     0%, 100% { transform: translateY(0) rotate(-1deg); }
@@ -49,6 +50,11 @@
   @keyframes bob {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-8px); }
+  }
+  /* the tape holds four identical runs, so sliding one run loops seamlessly */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-25%); }
   }
   @keyframes twinkle {
     0%, 100% { transform: scale(1) rotate(0); opacity: 1; }
@@ -109,6 +115,17 @@ body {
   .btn:active {
     transform: translate(3px, 3px);
     box-shadow: 1px 1px 0 var(--color-ink);
+  }
+
+  /* Crayon-style lettering: pastel fill with a thick outline drawn behind it */
+  .outlined-text {
+    -webkit-text-stroke: 0.2em var(--color-ink);
+    paint-order: stroke fill;
+    stroke-linejoin: round;
+  }
+  .tape-text {
+    -webkit-text-stroke: 0.17em var(--color-rust);
+    paint-order: stroke fill;
   }
 
   .section-title {
