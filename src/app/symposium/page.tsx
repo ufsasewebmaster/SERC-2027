@@ -80,8 +80,8 @@ export default function SymposiumPage() {
           >
             Submit Final Poster
           </a>
-          <p className="mt-3 text-center text-sm text-ink/80">
-            Final posters due {symposium.posterDeadline}
+          <p className="mt-3 text-center text-lg text-ink/80">
+            Final posters due {symposium.posterDeadline}!
           </p>
 
           <ul className="mt-16 grid w-full gap-6 md:grid-cols-3">

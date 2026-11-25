@@ -52,7 +52,7 @@ export default function TeamBoxes() {
           {allOpen ? "Close All the Boxes" : "Unbox Everyone"}
         </button>
       </div>
-      <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4">
+      <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4">
         {team.map((member, i) => (
           <li key={`${member.name}-${i}`}>
             <TeamBox
@@ -90,7 +90,7 @@ function TeamBox({
   return (
     <div className="group block w-full [perspective:1000px]">
       <motion.div
-        className="relative aspect-[3/4] min-h-[20rem] w-full [transform-style:preserve-3d] max-md:min-h-[15.5rem]"
+        className="relative aspect-[6/7] min-h-[17rem] w-full [transform-style:preserve-3d] max-md:min-h-[14.5rem]"
         animate={{ rotateY: open ? 180 : 0 }}
         transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 120, damping: 15 }}
       >
@@ -130,7 +130,7 @@ function TeamBox({
               )}
             </div>
           </div>
-          <p className="relative mt-4 font-display text-[clamp(0.8rem,2.6vw,1.05rem)] leading-tight font-extrabold">
+          <p className="relative mt-3 font-display text-[clamp(0.8rem,2.6vw,1.05rem)] leading-tight font-extrabold">
             {member.linkedin ? (
               <a href={member.linkedin} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1} className="underline underline-offset-4 hover:text-rust" aria-label={`${member.name} on LinkedIn`}>
                 {member.name}
