@@ -84,4 +84,32 @@ export const team: TeamMember[] = [
     photo: "/images/team/hana.png",
     linkedin: "https://www.linkedin.com/in/hana-elbatouty/",
   },
+  {
+    name: "Ryan Zhou",
+    photo: "/images/team/ryan.png",
+    position: "Marketing Coordinator",
+    major: "Biomedical Engineering",
+    linkedin: "https://www.linkedin.com/in/zhouryanj/",
+  },
+  {
+    name: "Alyssa Jin",
+    photo: "/images/team/alyssa.jpeg",
+    position: "Sponsorship Outreach Coordinator",
+    major: "Chemical Engineering",
+    linkedin: "https://www.linkedin.com/in/jin-alyssa/",
+  },
+  {
+    name: "Raghav Sharma",
+    photo: "/images/team/raghav.jpeg",
+    position: "Activities Coordinator",
+    major: "Computer Engineering",
+    linkedin: "https://www.linkedin.com/in/raghavsharma14/",
+  },
+  {
+    name: "Lily Lou",
+    photo: "/images/team/zhiqi.JPG",
+    position: "Food Coordinator",
+    major: "Food Science",
+    linkedin: "https://www.linkedin.com/in/zhiqi-lily-lou/",
+  },
 ];

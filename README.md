@@ -12,13 +12,13 @@ npm run build    # production build (all pages are static)
 
 ## Editing content
 
-**Almost everything lives in [`src/content/site.ts`](src/content/site.ts).** Team members live in [`src/content/team.ts`](src/content/team.ts). Search for `TODO` to find placeholders:
+**Almost everything lives in [`src/content/site.ts`](src/content/site.ts).** Team members live in [`src/content/team.ts`](src/content/team.ts), and partners live in [`src/content/partners.ts`](src/content/partners.ts). Search for `TODO` to find placeholders:
 
-| What | Where in `site.ts` |
+| What | Where |
 | --- | --- |
 | Planning team (name, position, major, photo, LinkedIn) | `src/content/team.ts` — photos go in `public/images/team/` |
 | FAQs | `faqs` |
-| Partner logos | `partners` — logos go in `public/images/partners/` |
+| Partners (name, logo, website) | `src/content/partners.ts` — logos go in `public/images/partners/` |
 | Registration Google Form | `registration.googleForm` (instructions in the comment above it) |
 | Early-price deadline | `registration.lateDeadline` |
 | Symposium application link | `symposium.applyUrl` (use the public `/viewform` link) |

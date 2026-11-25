@@ -31,7 +31,7 @@ export default function Faq() {
           Didn&apos;t find your answer? Email us at{" "}
           <a href={`mailto:${event.partnershipEmail}`} className="font-semibold text-rust underline underline-offset-4">
             {event.partnershipEmail}
-          </a>
+          </a>.
         </p>
       </div>
     </section>

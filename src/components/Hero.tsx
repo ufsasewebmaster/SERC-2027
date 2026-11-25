@@ -77,7 +77,7 @@ function TapeRun() {
 
 function PackingTape() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-5 sm:bottom-7" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 translate-y-1/2 overflow-hidden py-8" aria-hidden="true">
       <div className="relative -mx-6 -rotate-[1.2deg]">
         {/* The torn tape is a static layer; the text slides over it as a sibling so the
             clip-path never has to be re-applied while the marquee moves. */}
@@ -112,12 +112,13 @@ export default function Hero() {
   });
 
   return (
+    <div className="relative">
     <section className="relative isolate overflow-hidden bg-[#aac38d]">
       {/* cardboard: paper grain, printed doodles and flutes, painted once as a single static layer.
           No blend modes here: blending would force the whole hero to re-composite on every animation frame. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10" style={{ backgroundImage: `${GRAIN}, ${DOODLES}, ${CORRUGATION}` }} />
 
-      <div className="relative mx-auto max-w-6xl px-4 pt-32 pb-32 sm:px-6 sm:pb-44 md:pt-14 lg:px-8">
+      <div className="relative mx-auto max-w-6xl px-4 pt-32 pb-20 sm:px-6 sm:pb-28 md:pt-14 lg:px-8">
         <h1 className="sr-only">
           SASE {event.name}: {event.fullName} at the {event.venue}. {event.theme}!
         </h1>
@@ -137,7 +138,7 @@ export default function Hero() {
                 className="h-auto w-full drop-shadow-[0_5px_0_rgba(74,36,32,0.14)]"
               />
             </motion.div>
-            <motion.div {...pop(0.3)} className="relative mx-auto -mt-[2%] w-[62%] translate-x-[8%] rotate-[9deg]">
+            <motion.div {...pop(0.3)} className="relative mx-auto -mt-[2%] w-[62%] -translate-x-[6%] rotate-[1deg]">
               <Image
                 src="/images/hero/2027.png"
                 alt=""
@@ -148,15 +149,15 @@ export default function Hero() {
                 className="h-auto w-full drop-shadow-[0_5px_0_rgba(74,36,32,0.14)]"
               />
             </motion.div>
-            <Image src="/images/hero/star-yellow.png" alt="" width={122} height={124} className="absolute bottom-[6%] left-[2%] h-auto w-[12%] animate-twinkle" />
+            <Image src="/images/hero/star-yellow.png" alt="" width={122} height={124} className="absolute bottom-[6%] -left-[1%] h-auto w-[12%] animate-twinkle" />
             <Image
               src="/images/hero/star-pink.png"
               alt=""
               width={117}
               height={113}
-              className="absolute right-[1%] bottom-[10%] h-auto w-[12%] animate-twinkle [animation-delay:1.2s]"
+              className="absolute right-[9%] bottom-[6%] h-auto w-[12%] animate-twinkle [animation-delay:1.2s]"
             />
-            <Burst className="-right-[14%] -bottom-[14%] w-[18%] [--r:180deg]" color="#8e6a6a" delay={0.2} />
+            <Burst className="-right-[8%] -bottom-[6%] w-[18%] [--r:180deg]" color="#8e6a6a" delay={0.2} />
           </div>
 
           {/* the red panda */}
@@ -188,7 +189,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.5 }}
         >
-          <p className="outlined-text font-heading text-[clamp(1.35rem,4.4vw,2.9rem)] leading-tight font-bold text-paper">
+          <p className="outlined-text font-sans text-[clamp(1.35rem,4.4vw,2.9rem)] leading-tight font-bold tracking-[0.06em] text-ink [-webkit-text-stroke-color:#fff]">
             <span className="max-sm:block">
               January 17<sup className="text-[0.55em]">th</sup>
             </span>
@@ -204,7 +205,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <PackingTape />
     </section>
+    <PackingTape />
+    </div>
   );
 }

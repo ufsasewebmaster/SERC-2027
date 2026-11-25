@@ -85,13 +85,12 @@ function TeamBox({
   onToggle: () => void;
   reduceMotion: boolean;
 }) {
-  const number = `No. ${String(index + 1).padStart(2, "0")}`;
   const open = phase === "open";
 
   return (
     <div className="group block w-full [perspective:1000px]">
       <motion.div
-        className="relative aspect-[3/4] min-h-[20rem] w-full [transform-style:preserve-3d]"
+        className="relative aspect-[3/4] min-h-[20rem] w-full [transform-style:preserve-3d] max-md:min-h-[15.5rem]"
         animate={{ rotateY: open ? 180 : 0 }}
         transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 120, damping: 15 }}
       >
@@ -106,14 +105,13 @@ function TeamBox({
             phase === "shaking" ? "animate-wiggle" : "transition-transform group-hover:-translate-y-1 group-hover:-rotate-2"
           }`}
         >
-          <BlindBox color={color} label={number} lid={phase === "shaking" ? "pop" : open ? "off" : "closed"} className="w-full" />
+          <BlindBox color={color} lid={phase === "shaking" ? "pop" : open ? "off" : "closed"} className="w-full" />
         </button>
 
         {/* back: the character card */}
         <div
           aria-hidden={!open}
           className="sticker absolute inset-0 flex flex-col items-center overflow-hidden bg-paper px-3 pt-4 pb-3 text-center [backface-visibility:hidden] [transform:rotateY(180deg)]"
-          style={{ backgroundImage: `linear-gradient(180deg, ${color} 0 42%, transparent 42%)` }}
         >
           <button
             type="button"
@@ -122,15 +120,15 @@ function TeamBox({
             aria-label={`Close ${member.name}'s box`}
             className="absolute inset-0 rounded-[inherit]"
           />
-          <span className="pointer-events-none self-start rounded-full bg-ink px-2 py-0.5 font-heading text-[0.65rem] font-bold tracking-wider text-paper">
-            {number}
-          </span>
-          <div className="pointer-events-none relative mt-1 aspect-square w-[52%] shrink-0 overflow-hidden rounded-full border-[3px] border-ink bg-cream">
-            {member.photo ? (
-              <Image src={member.photo} alt="" fill sizes="(min-width: 1024px) 15vw, 30vw" className="object-cover" />
-            ) : (
-              <Silhouette />
-            )}
+          <div className="pointer-events-none relative mt-1 w-full shrink-0">
+            <div aria-hidden="true" className="absolute -inset-x-3 -top-5 -bottom-2" style={{ backgroundColor: color }} />
+            <div className="relative mx-auto aspect-square w-[52%] overflow-hidden rounded-full border-[3px] border-ink bg-cream">
+              {member.photo ? (
+                <Image src={member.photo} alt="" fill sizes="(min-width: 1024px) 15vw, 30vw" className="object-cover" />
+              ) : (
+                <Silhouette />
+              )}
+            </div>
           </div>
           <p className="relative mt-4 font-display text-[clamp(0.8rem,2.6vw,1.05rem)] leading-tight font-extrabold">
             {member.linkedin ? (
