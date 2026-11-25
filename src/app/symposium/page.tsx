@@ -64,7 +64,7 @@ export default function SymposiumPage() {
               />
             </span>
             <span className="btn mt-6 bg-rust text-xl text-paper">
-              Apply to Present
+              Sign Up to Present
             </span>
           </a>
           {!hasLink && (
@@ -72,6 +72,17 @@ export default function SymposiumPage() {
               Applications open soon!
             </p>
           )}
+          <a
+            href={symposium.posterUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn mt-5 bg-paper text-base text-ink"
+          >
+            Submit Final Poster
+          </a>
+          <p className="mt-3 text-center text-sm text-ink/80">
+            Final posters due {symposium.posterDeadline}
+          </p>
 
           <ul className="mt-16 grid w-full gap-6 md:grid-cols-3">
             {highlights.map((h) => (
