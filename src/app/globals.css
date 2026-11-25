@@ -57,11 +57,10 @@
     from { transform: translateX(0); }
     to { transform: translateX(-25%); }
   }
-  /* a quick pop, then rest; --r keeps any static rotation */
   @keyframes burst {
-    0%, 16%, 100% { transform: rotate(var(--r, 0deg)) scale(1); }
-    5% { transform: rotate(var(--r, 0deg)) scale(1.18); }
-    11% { transform: rotate(var(--r, 0deg)) scale(0.94); }
+    0%, 16%, 100% { transform: scale(1); }
+    5% { transform: scale(1.18); }
+    11% { transform: scale(0.94); }
   }
   @keyframes twinkle {
     0%, 100% { transform: scale(1) rotate(0); opacity: 1; }

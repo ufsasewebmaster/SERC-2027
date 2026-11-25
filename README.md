@@ -19,7 +19,7 @@ npm run build    # production build (all pages are static)
 | Planning team (name, position, major, photo, LinkedIn) | `src/content/team.ts` — photos go in `public/images/team/` |
 | FAQs | `faqs` |
 | Partners (name, logo, website) | `src/content/partners.ts` — logos go in `public/images/partners/` |
-| Registration Google Form | `registration.googleForm` (instructions in the comment above it) |
+| Registration Google Form | `registration.formUrl` (public Google Form responder link) |
 | Early-price deadline | `registration.lateDeadline` |
 | Symposium application link | `symposium.applyUrl` (use the public `/viewform` link) |
 | Symposium mascot button art | `symposium.mascotImage` |
@@ -27,7 +27,7 @@ npm run build    # production build (all pages are static)
 
 ## Pages
 
-- `/` — scrolling homepage: hero, About, What's in the box?, team blind boxes, countdown, FAQs
+- `/` — scrolling homepage: hero, About, What's in the box?, partner logos, team blind boxes, countdown, FAQs
 - `/schedule` — conference timeline; edit times and activities in `src/content/schedule.ts`
 - `/partners` — partner logo grid
 - `/symposium` — research symposium + apply button

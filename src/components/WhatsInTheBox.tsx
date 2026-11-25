@@ -37,7 +37,7 @@ export default function WhatsInTheBox() {
           <Link href="/schedule" className="btn bg-paper text-base sm:text-lg">
             View the Schedule <span aria-hidden="true">→</span>
           </Link>
-          <Link href="/partners" className="btn bg-cream text-base sm:text-lg">
+          <Link href="#partners" className="btn bg-cream text-base sm:text-lg">
             Meet Our Partners <span aria-hidden="true">→</span>
           </Link>
         </nav>
