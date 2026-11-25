@@ -71,23 +71,23 @@ export default function RegistrationTicket() {
               onClick={() => setOpen(true)}
               aria-haspopup="dialog"
               aria-expanded={open}
-              className="group relative -mt-1 block w-[112px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-[224px]"
+              className="group relative -mt-1 block w-[140px] drop-shadow-[3px_3px_0_var(--color-ink)] sm:w-[224px]"
             >
               <TicketShape className="block w-full" />
               <span className="absolute inset-0 flex items-center">
                 <span className="flex w-[30%] items-center justify-center self-stretch">
-                  <span className="font-heading text-[0.5rem] font-bold tracking-[0.2em] [writing-mode:vertical-rl] rotate-180 sm:text-[0.75rem]">
+                  <span className="font-heading text-[0.5rem] font-bold tracking-[0.2em] [writing-mode:vertical-rl] rotate-180 sm:text-[0.75rem] max-sm:text-[0.53rem] max-sm:tracking-[0.16em]">
                     ADMIT ONE
                   </span>
                 </span>
-                <span className="flex flex-1 flex-col items-center leading-none">
-                  <span className="font-heading text-[0.5rem] font-semibold tracking-[0.18em] sm:text-[0.8rem]">
+                <span className="flex flex-1 flex-col items-center leading-none max-sm:min-w-0 max-sm:px-2">
+                  <span className="font-heading text-[0.5rem] font-semibold tracking-[0.18em] sm:text-[0.8rem] max-sm:whitespace-nowrap max-sm:text-[0.55rem] max-sm:tracking-[0.12em]">
                     SERC 2027
                   </span>
-                  <span className="mt-1 font-display text-[0.62rem] font-extrabold sm:text-[1.05rem]">
+                  <span className="mt-1 font-display text-[0.62rem] font-extrabold sm:text-[1.05rem] max-sm:mt-0.5 max-sm:whitespace-nowrap max-sm:text-[0.67rem]">
                     REGISTER
                   </span>
-                  <span className="mt-1 rounded-full bg-ink px-1.5 py-0.5 text-[0.55rem] font-semibold text-paper sm:text-xl">
+                  <span className="mt-1 rounded-full bg-ink px-1.5 py-0.5 text-[0.55rem] font-semibold text-paper sm:text-xl max-sm:mt-0.5 max-sm:text-[0.62rem]">
                     {registration.price}
                   </span>
                 </span>

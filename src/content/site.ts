@@ -32,10 +32,10 @@ export const registration = {
   latePrice: "$45",
   // TODO: the date the price goes up, e.g. "December 20".
   lateDeadline: "",
-  // TODO: add the published Google Form responder URL (/viewform or forms.gle).
+  // Published Google Form responder URL (/viewform or forms.gle).
   // The form collects attendee details, explains payment, and accepts receipt uploads.
   // Leave empty until ready; the ticket shows a disabled button instead of an old link.
-  formUrl: "",
+  formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSdVKtveKJEHKX5P61Cw74g5KM-SRlzJYsf8aXQdOe6Q70agwg/viewform",
 };
 
 export const about = {
@@ -77,6 +77,10 @@ export const whatsInTheBox: BoxItem[] = [
   {
     title: "Career Fair",
     body: "Connect one-on-one with company representatives and recruiters! Explore internship and full-time opportunities, get a chance to interview directly with companies, learn about different career paths, and build professional connections.",
+  },
+  {
+    title: "On-Site Interviews",
+    body: "Get the opportunity to interview directly with participating companies during the conference. Connect with recruiters and showcase your skills through interviews for potential internship and full-time opportunities. Interview availability will vary by company.",
   },
   {
     title: "Research Symposium",
@@ -128,20 +132,9 @@ export const faqs: Faq[] = [
   },
 ];
 
-export type Partner = { name: string; logo: string; href?: string; logoFit?: "contain" | "cover" };
-
-/** Placeholder lineup for now. Put logos in /public/images/partners/. */
-export const partners: Partner[] = [
-  { name: "NASA", logo: "/images/partners/nasa.webp", href: "https://www.nasa.gov/" },
-  { name: "Mortenson", logo: "/images/partners/mortenson.png", href: "https://www.mortenson.com/" },
-  { name: "Sandia National Laboratories", logo: "/images/partners/sandia.png", href: "https://www.sandia.gov/" },
-  { name: "Mayo Clinic", logo: "/images/partners/mayo-clinic.png", href: "https://www.mayoclinic.org/" },
-  { name: "PepsiCo", logo: "/images/partners/pepsico.png", logoFit: "cover" },
-];
-
 export const symposium = {
-  // TODO: the PUBLIC Google Form link (…/viewform), not the edit link.
-  applyUrl: "",
+  // Public research symposium application form.
+  applyUrl: "https://docs.google.com/forms/d/e/1FAIpQLSeUDSvh0uS3bmkOv_EZt97R-XfVrb-JwNJTzIzsdj0Bi5kDpQ/viewform",
   // TODO: swap for the scientist mascot graphic when it's ready.
   mascotImage: "/images/logo.png",
 };

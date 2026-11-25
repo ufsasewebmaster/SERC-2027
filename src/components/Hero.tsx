@@ -140,7 +140,7 @@ export default function Hero() {
                 className="h-auto w-full drop-shadow-[0_5px_0_rgba(74,36,32,0.14)]"
               />
             </motion.div>
-            <motion.div {...pop(0.3)} className="relative mx-auto -mt-[2%] w-[62%] -translate-x-[6%] rotate-[9deg]">
+            <motion.div {...pop(0.3)} className="relative mx-auto -mt-[2%] w-[62%] -translate-x-[6%] rotate-[1deg]">
               <Image
                 src="/images/hero/2027.png"
                 alt=""
@@ -157,9 +157,9 @@ export default function Hero() {
               alt=""
               width={117}
               height={113}
-              className="absolute right-[1%] bottom-[10%] h-auto w-[12%] animate-twinkle [animation-delay:1.2s]"
+              className="absolute right-[9%] bottom-[6%] h-auto w-[12%] animate-twinkle [animation-delay:1.2s]"
             />
-            <Burst className="-right-[14%] -bottom-[14%] w-[18%] rotate-180" color="#8e6a6a" delay={0.2} reduce={reduce} />
+            <Burst className="-right-[8%] -bottom-[6%] w-[18%] rotate-180" color="#8e6a6a" delay={0.2} reduce={reduce} />
           </div>
 
           {/* the red panda */}
