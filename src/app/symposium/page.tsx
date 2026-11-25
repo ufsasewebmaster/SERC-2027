@@ -68,7 +68,7 @@ export default function SymposiumPage() {
             </span>
           </a>
           {!hasLink && (
-            <p className="mt-4 text-center text-ink/80">
+            <p className="mt-4 text-center text-lg text-ink/80 sm:text-xl">
               Applications open soon!
             </p>
           )}
