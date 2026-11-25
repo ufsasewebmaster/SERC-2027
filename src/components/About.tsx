@@ -4,7 +4,7 @@ import { Star } from "./decor";
 
 export default function About() {
   return (
-    <section id="about" className="relative bg-peach pt-10 pb-20 sm:pt-14 sm:pb-24">
+    <section id="about" className="relative bg-peach pt-20 pb-20 sm:pt-24 sm:pb-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.9fr]">
           <div>

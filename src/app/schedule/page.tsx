@@ -30,7 +30,7 @@ function TimeRange({ start, end }: { start: string; end: string }) {
   return (
     <>
       <time dateTime={`2027-01-17T${start}:00-05:00`}>{formatTime(start)}</time>
-      <span aria-hidden="true"> – </span><span className="sr-only"> to </span>
+      <span aria-hidden="true" className="mx-1.5">–</span><span className="sr-only"> to </span>
       <time dateTime={`2027-01-17T${end}:00-05:00`}>{formatTime(end)}</time>
     </>
   );
@@ -82,7 +82,7 @@ export default function SchedulePage() {
                 <h2 className="mt-1 font-display text-base leading-tight font-extrabold uppercase sm:text-[1.2rem]">
                   <time dateTime={event.startsAt.slice(0, 10)}>{event.dateLabel}</time>
                 </h2>
-                <p className="mt-3 rounded-full bg-ink px-3 py-1 text-xs leading-snug font-semibold text-paper sm:text-base">
+                <p className="mt-3 rounded-full bg-ink px-3 py-1 text-lg leading-snug font-semibold text-paper sm:text-xl">
                   {formatTime(dayStart)} – {formatTime(dayEnd)}
                 </p>
                 <p className="mt-2 text-xs font-semibold sm:text-sm">Eastern Time (ET)</p>
@@ -96,26 +96,26 @@ export default function SchedulePage() {
                 const last = block.activities[block.activities.length - 1];
                 const isGroup = block.activities.length > 1;
                 return (
-                  <li key={first.start} className="relative grid grid-cols-[2rem_minmax(0,1fr)] items-start gap-4 sm:grid-cols-[9rem_2rem_minmax(0,1fr)]">
+                  <li key={first.start} className="relative grid grid-cols-[2rem_minmax(0,1fr)] items-start gap-4 sm:grid-cols-[16rem_2rem_minmax(0,1fr)]">
                     {index < schedule.length - 1 && (
-                      <div aria-hidden="true" className="absolute top-[67px] -bottom-[91px] left-4 w-[3px] -translate-x-1/2 bg-rust/30 sm:top-[39px] sm:-bottom-[71px] sm:left-44" />
+                      <div aria-hidden="true" className="absolute top-[75px] -bottom-[99px] left-4 w-[3px] -translate-x-1/2 bg-rust/30 sm:top-[39px] sm:-bottom-[71px] sm:left-72" />
                     )}
-                    <p className="hidden whitespace-nowrap pt-[23px] text-right font-heading text-xs leading-8 font-semibold tabular-nums sm:block">
+                    <p className="hidden whitespace-nowrap pt-[23px] text-right font-heading text-lg leading-8 font-semibold tabular-nums sm:block sm:text-xl">
                       <TimeRange start={first.start} end={last.end} />
                     </p>
-                    <div className="relative mt-[51px] rounded-full bg-paper p-0.5 sm:mt-[23px]" aria-hidden="true">
+                    <div className="relative mt-[59px] rounded-full bg-paper p-0.5 sm:mt-[23px]" aria-hidden="true">
                       <BoxIcon className="size-7" color="var(--color-star)" />
                     </div>
                     {isGroup ? (
                       <div className="sticker min-w-0 bg-paper p-5 sm:px-6">
-                        <p className="mb-2 font-heading text-sm leading-5 font-semibold tabular-nums text-rust sm:hidden">
+                        <p className="mb-2 font-heading text-lg leading-7 font-semibold tabular-nums sm:text-xl text-rust sm:hidden">
                           <TimeRange start={first.start} end={last.end} />
                         </p>
                         <h2 className="font-heading text-xl leading-8 font-bold sm:text-2xl">{block.title}</h2>
                         <ul className="mt-4 grid gap-3 md:grid-cols-2">
                           {block.activities.map((activity) => (
                             <li key={activity.title} className={`rounded-xl border-2 border-ink p-4 ${activityColors[activity.category]}`}>
-                              <p className="font-heading text-sm font-semibold tabular-nums">
+                              <p className="font-heading text-lg font-semibold tabular-nums sm:text-xl">
                                 <TimeRange start={activity.start} end={activity.end} />
                               </p>
                               <h3 className="mt-1 font-heading text-lg font-bold"><ActivityTitle activity={activity} /></h3>
@@ -125,7 +125,7 @@ export default function SchedulePage() {
                       </div>
                     ) : (
                       <div className={`sticker min-w-0 px-5 py-5 sm:px-6 ${activityColors[first.category]}`}>
-                        <p className="mb-2 font-heading text-sm leading-5 font-semibold tabular-nums sm:hidden">
+                        <p className="mb-2 font-heading text-lg leading-7 font-semibold tabular-nums sm:text-xl sm:hidden">
                           <TimeRange start={first.start} end={first.end} />
                         </p>
                         <h2 className="font-heading text-xl leading-8 font-bold sm:text-2xl"><ActivityTitle activity={first} /></h2>

@@ -9,7 +9,7 @@ export default function Team() {
         <div className="text-center">
           <h2 className="section-title">Meet the Team</h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg sm:text-xl">
-            Who’s in the box? Tap to meet the SERC 2027 team.
+            Who’s in the box? Tap to meet the SERC 2027 team!
           </p>
         </div>
         <TeamBoxes />

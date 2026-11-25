@@ -128,7 +128,7 @@ export const faqs: Faq[] = [
   },
 ];
 
-export type Partner = { name: string; logo: string; href?: string };
+export type Partner = { name: string; logo: string; href?: string; logoFit?: "contain" | "cover" };
 
 /** Placeholder lineup for now. Put logos in /public/images/partners/. */
 export const partners: Partner[] = [
@@ -136,6 +136,7 @@ export const partners: Partner[] = [
   { name: "Mortenson", logo: "/images/partners/mortenson.png", href: "https://www.mortenson.com/" },
   { name: "Sandia National Laboratories", logo: "/images/partners/sandia.png", href: "https://www.sandia.gov/" },
   { name: "Mayo Clinic", logo: "/images/partners/mayo-clinic.png", href: "https://www.mayoclinic.org/" },
+  { name: "PepsiCo", logo: "/images/partners/pepsico.png", logoFit: "cover" },
 ];
 
 export const symposium = {

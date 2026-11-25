@@ -83,7 +83,7 @@ function TapeRun() {
 
 function PackingTape() {
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-5 sm:bottom-7" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 translate-y-1/2 overflow-hidden py-8" aria-hidden="true">
       <div
         className="-mx-6 -rotate-[1.2deg] overflow-hidden bg-[#d8b684] py-2 shadow-[0_5px_0_rgba(74,36,32,0.14)] sm:py-3"
         style={{
@@ -113,13 +113,14 @@ export default function Hero() {
   });
 
   return (
+    <div className="relative">
     <section className="relative isolate overflow-hidden bg-[#aac38d]">
       {/* cardboard: flutes, printed doodles, paper grain */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10" style={{ backgroundImage: CORRUGATION }} />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 opacity-60" style={{ backgroundImage: DOODLES }} />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 opacity-30 mix-blend-multiply" style={{ backgroundImage: GRAIN }} />
 
-      <div className="relative mx-auto max-w-6xl px-4 pt-32 pb-32 sm:px-6 sm:pb-44 md:pt-14 lg:px-8">
+      <div className="relative mx-auto max-w-6xl px-4 pt-32 pb-20 sm:px-6 sm:pb-28 md:pt-14 lg:px-8">
         <h1 className="sr-only">
           SASE {event.name}: {event.fullName} at the {event.venue}. {event.theme}!
         </h1>
@@ -139,7 +140,7 @@ export default function Hero() {
                 className="h-auto w-full drop-shadow-[0_5px_0_rgba(74,36,32,0.14)]"
               />
             </motion.div>
-            <motion.div {...pop(0.3)} className="relative mx-auto -mt-[2%] w-[62%] translate-x-[8%] rotate-[9deg]">
+            <motion.div {...pop(0.3)} className="relative mx-auto -mt-[2%] w-[62%] -translate-x-[6%] rotate-[9deg]">
               <Image
                 src="/images/hero/2027.png"
                 alt=""
@@ -150,7 +151,7 @@ export default function Hero() {
                 className="h-auto w-full drop-shadow-[0_5px_0_rgba(74,36,32,0.14)]"
               />
             </motion.div>
-            <Image src="/images/hero/star-yellow.png" alt="" width={122} height={124} className="absolute bottom-[6%] left-[2%] h-auto w-[12%] animate-twinkle" />
+            <Image src="/images/hero/star-yellow.png" alt="" width={122} height={124} className="absolute bottom-[6%] -left-[1%] h-auto w-[12%] animate-twinkle" />
             <Image
               src="/images/hero/star-pink.png"
               alt=""
@@ -190,7 +191,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7, duration: 0.5 }}
         >
-          <p className="outlined-text font-heading text-[clamp(1.35rem,4.4vw,2.9rem)] leading-tight font-bold text-paper">
+          <p className="outlined-text font-sans text-[clamp(1.35rem,4.4vw,2.9rem)] leading-tight font-bold tracking-[0.06em] text-ink [-webkit-text-stroke-color:#fff]">
             <span className="max-sm:block">
               January 17<sup className="text-[0.55em]">th</sup>
             </span>
@@ -206,7 +207,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <PackingTape />
     </section>
+    <PackingTape />
+    </div>
   );
 }

@@ -28,8 +28,8 @@ export default function PartnersPage() {
             <ul className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
               {partners.map((p) => {
                 const logo = (
-                  <div className="relative aspect-[3/2] w-full">
-                    <Image src={p.logo} alt={p.name} fill sizes="(min-width: 1024px) 22vw, 45vw" className="object-contain" />
+                  <div className="relative aspect-[3/2] w-full overflow-hidden">
+                    <Image src={p.logo} alt={p.name} fill sizes="(min-width: 1024px) 22vw, 45vw" className={p.logoFit === "cover" ? "object-cover" : "object-contain"} />
                   </div>
                 );
                 return (
@@ -59,6 +59,7 @@ export default function PartnersPage() {
               </ul>
             </>
           )}
+          <p className="mt-8 text-center text-lg text-rust sm:text-xl">More partners coming soon!</p>
 
           <div className="sticker mx-auto mt-16 max-w-2xl bg-sky p-6 text-center sm:p-8">
             <h2 className="font-display text-2xl font-extrabold">Interested in Partnering?</h2>
